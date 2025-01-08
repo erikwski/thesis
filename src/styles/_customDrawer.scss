@@ -1,0 +1,25 @@
+// CUSTOM STYLE TO DRAWER COMPOENT
+// block overflow cuz drawer component of daysy-ui is setted to get the full height of the page but
+// we set a padding of .5em to the main content &
+// manage scroll inside the content
+.drawer-content {
+    height: calc(100vh - 1rem);
+}
+
+#note-container {
+    height: calc(100% - 40px);
+}
+
+@media (max-width: 1023px) {
+    .drawer-content {
+        height: calc(100vh - 56px);
+    }
+}
+
+@media (min-width: 1024px) {
+
+    .drawer-side,
+    notes-sidebar {
+        height: calc(100vh - 1rem);
+    }
+}
