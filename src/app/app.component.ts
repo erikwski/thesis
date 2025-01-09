@@ -4,6 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
+import { LoginService } from './services/login.service';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ import { Router, RouterOutlet } from '@angular/router';
 })
 export class AppComponent implements OnInit{
   protected router = inject(Router)
+  protected loginService = inject(LoginService)
   codDipendente = "";
   visibile = true;
   
@@ -24,9 +26,8 @@ export class AppComponent implements OnInit{
   }
 
   login() {
-    localStorage.setItem('user', this.codDipendente);
+    this.loginService.login(this.codDipendente)
     this.router.navigate(["magazzino"])
     this.visibile = false;
-
   }
 }

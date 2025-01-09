@@ -3,8 +3,20 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
-import { definePreset, usePreset } from '@primeng/themes';
+import { definePreset } from '@primeng/themes';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import Aura from '@primeng/themes/aura';
+
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyBOg_65P4xk53QqtWxjnV7CX1aULyGCbjA',
+  authDomain: 'thesis-c797f.firebaseapp.com',
+  projectId: 'thesis-c797f',
+  storageBucket: 'thesis-c797f.firebasestorage.app',
+  messagingSenderId: '512444706396',
+  appId: '1:512444706396:web:87fba161a58c6576bac099',
+};
 
 const Noir = definePreset(Aura, {
   semantic: {
@@ -59,6 +71,8 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),
+    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideFirestore(() => getFirestore()),
     providePrimeNG({
       theme: {
         preset: Noir,
