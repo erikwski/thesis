@@ -1,33 +1,70 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
-import { LoginService } from './services/login.service';
+import { UserStore } from './store/user.store';
 
 @Component({
   selector: 'app-root',
-  imports: [InputTextModule, ButtonModule, DialogModule, FormsModule, RouterOutlet],
+  standalone: true,
+  imports: [
+    InputTextModule,
+    ButtonModule,
+    DialogModule,
+    FormsModule,
+    RouterOutlet,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit{
-  protected router = inject(Router)
-  protected loginService = inject(LoginService)
-  codDipendente = "";
-  visibile = true;
-  
+export class AppComponent implements OnInit {
+  protected router = inject(Router);
+  protected user = inject(UserStore);
+
+  codDipendente = '';
+  nome = '';
+  visibile = signal(true);
+
   ngOnInit(): void {
-      if(localStorage.getItem("user")){
-        this.router.navigate(['magazzino']);
-        this.visibile = false;
-      }
+    this.codDipendente = localStorage.getItem('codDip') ?? '';
+    if (this.codDipendente) {
+      this.user.login(this.codDipendente);
+    }
   }
 
+  public newUser = computed(
+    () => this.user.codDipendente().length > 0 && this.user.nome().length === 0
+  );
+
+  public mostraNome = computed(
+    () => this.newUser() && this.user.nome().length == 0
+  );
+
+  protected hideModal = effect(
+    () => {
+      if (this.user.codDipendente().length) {
+        this.visibile.set(false);
+      }
+    },
+    { allowSignalWrites: true }
+  );
+
+  protected navigate = effect(
+    () => {
+      if (this.user.loggato()) {
+        this.router.navigate(['magazzino']);
+      }
+    },
+  );
+
   login() {
-    this.loginService.login(this.codDipendente)
-    this.router.navigate(["magazzino"])
-    this.visibile = false;
+    localStorage.setItem('codDip', this.codDipendente);
+    this.user.login(this.codDipendente);
+  }
+
+  salvaNome() {
+    this.user.aggiornaNome(this.nome);
   }
 }
