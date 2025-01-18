@@ -1,24 +1,30 @@
-<p-dialog header="Digita il tuo identificativo" [modal]="true" [visible]="visibile()" [closable]="false" [style]="{ width: '25rem' }">
-    <div class="flex justify-center items-center gap-4 mb-4">
-        <label for="username" class="font-semibold w-24">Codice</label>
-        <input pInputText id="codDip" class="flex-auto" autocomplete="off" [(ngModel)]="codDipendente" />
-    </div>
-    <div class="flex justify-end gap-2">
-        <p-button label="Login" [disabled]="codDipendente.length == 0" (click)="login()" />
-    </div>
-</p-dialog>
-@if(newUser()){
-  <p-dialog header="Benvenuto, inserisci il tuo nome" [modal]="true" [visible]="mostraNome()" [closable]="false" [style]="{ width: '25rem' }">
-    <div class="flex justify-start items-center gap-4 mb-4">
-      <b>Identificativo: {{this.codDipendente}}</b>
-    </div>
-    <div class="flex justify-center items-center gap-4 mb-4">
-        <label for="username" class="font-semibold w-24">Nome</label>
-        <input pInputText id="codDip" class="flex-auto" autocomplete="off" [(ngModel)]="nome" />
-    </div>
-    <div class="flex justify-end gap-2">
-        <p-button label="Conferma" [disabled]="nome.length == 0" (click)="salvaNome()" />
-    </div>
-</p-dialog>
+@if(user.isPending()){
+  <div class="loading-screen">
+      <p-progress-spinner ariaLabel="loading" />
+  </div>
+}@else {
+  <p-dialog header="Digita il tuo identificativo" [modal]="true" [visible]="visibile()" [closable]="false" [style]="{ width: '25rem' }">
+      <div class="flex justify-center items-center gap-4 mb-4">
+          <label for="username" class="font-semibold w-24">Codice</label>
+          <input pInputText id="codDip" class="flex-auto" autocomplete="off" [(ngModel)]="codDipendente" />
+      </div>
+      <div class="flex justify-end gap-2">
+          <p-button label="Login" [disabled]="codDipendente.length == 0" (click)="login()" />
+      </div>
+  </p-dialog>
+  @if(newUser()){
+    <p-dialog header="Benvenuto, inserisci il tuo nome" [modal]="true" [visible]="showName()" [closable]="false" [style]="{ width: '25rem' }">
+      <div class="flex justify-start items-center gap-4 mb-4">
+        <b>Identificativo: {{this.codDipendente}}</b>
+      </div>
+      <div class="flex justify-center items-center gap-4 mb-4">
+          <label for="username" class="font-semibold w-24">Nome</label>
+          <input pInputText id="codDip" class="flex-auto" autocomplete="off" [(ngModel)]="nome" />
+      </div>
+      <div class="flex justify-end gap-2">
+          <p-button label="Conferma" [disabled]="nome.length == 0" (click)="salvaNome()" />
+      </div>
+  </p-dialog>
+  }
+  <router-outlet></router-outlet>
 }
-<router-outlet></router-outlet>

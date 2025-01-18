@@ -5,6 +5,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
 import { UserStore } from './store/user.store';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-root',
@@ -15,13 +16,14 @@ import { UserStore } from './store/user.store';
     DialogModule,
     FormsModule,
     RouterOutlet,
+    ProgressSpinnerModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
   protected router = inject(Router);
-  protected user = inject(UserStore);
+  public user = inject(UserStore);
 
   codDipendente = '';
   nome = '';
@@ -38,7 +40,7 @@ export class AppComponent implements OnInit {
     () => this.user.codDipendente().length > 0 && this.user.nome().length === 0
   );
 
-  public mostraNome = computed(
+  public showName = computed(
     () => this.newUser() && this.user.nome().length == 0
   );
 
