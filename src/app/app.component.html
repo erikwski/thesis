@@ -3,19 +3,10 @@
       <p-progress-spinner ariaLabel="loading" />
   </div>
 }@else {
-  <p-dialog header="Digita il tuo identificativo" [modal]="true" [visible]="visibile()" [closable]="false" [style]="{ width: '25rem' }" maskStyleClass="none">
-      <div class="flex justify-center items-center gap-4 mb-4">
-          <label for="username" class="font-semibold w-24">Codice</label>
-          <input pInputText id="codDip" class="flex-auto" autocomplete="off" [(ngModel)]="codDipendente" />
-      </div>
-      <div class="flex justify-end gap-2">
-          <p-button label="Login" [disabled]="codDipendente.length == 0" (click)="login()" />
-      </div>
-  </p-dialog>
-  @if(newUser()){
-    <p-dialog header="Benvenuto, inserisci il tuo nome" [modal]="true" [visible]="showName()" [closable]="false" [style]="{ width: '25rem' }" maskStyleClass="none">
+  <p-dialog header="Digita il tuo identificativo" [modal]="true" [visible]="visibile()" [closable]="false" [style]="{ width: '25%', minWidth: '20rem' }" maskStyleClass="none">
+    @if(newUser()){
       <div class="flex justify-start items-center gap-4 mb-4">
-        <b>Identificativo: {{this.codDipendente}}</b>
+        <b>Identificativo: {{this.codDip()}}</b>
       </div>
       <div class="flex justify-center items-center gap-4 mb-4">
           <label for="username" class="font-semibold w-24">Nome</label>
@@ -24,8 +15,21 @@
       <div class="flex justify-end gap-2">
           <p-button label="Conferma" [disabled]="nome.length == 0" (click)="salvaNome()" />
       </div>
+    }@else {
+      <div class="flex justify-center items-center gap-4">
+        <label for="username" class="font-semibold w-24">Codice</label>
+        <input pInputText type="text" id="codDip" class="flex-auto" autocomplete="off" [(ngModel)]="codDip" [class.ng-invalid]="validateNumberCodDip()"/>
+      </div>
+      @if(validateNumberCodDip()){
+        <div class="flex justify-end gap-4">
+          <span class="text-red-600">Il codice deve essere numerico, non puó contenere caratteri</span>
+        </div>
+      }
+      <div class="flex justify-end gap-2 mt-4">
+          <p-button label="Login" [disabled]="disableConfirmCodDip()" (click)="login()" />
+      </div>
+    }
   </p-dialog>
-  }
   <router-outlet></router-outlet>
 }
 <p-toast />

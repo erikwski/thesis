@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, model, OnInit, signal } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -30,30 +30,30 @@ export class AppComponent implements OnInit {
   protected messageService = inject(MessageService);
   public store = inject(GlobalStore);
 
-  codDipendente = '';
-  nome = '';
+  codDip = model<string>('');
+  nome = model<string>('');
   visibile = signal(true);
 
   ngOnInit(): void {
-    this.codDipendente = localStorage.getItem('codDip') ?? '';
-    if (this.codDipendente) {
-      this.store.login(this.codDipendente);
+    this.codDip.set(localStorage.getItem('codDip') ?? '');
+    if (this.codDip().length) {
+      this.store.login(+this.codDip());
     }
   }
 
   public newUser = computed(
-    () =>
-      this.store.codDipendente().length > 0 && this.store.nome().length === 0
+    () => this.store.codDipendente() > 0 && this.store.nome().length === 0
   );
 
-  public showName = computed(
-    () => this.newUser() && this.store.nome().length == 0
-  );
+  public validateNumberCodDip = computed<boolean>(() => isNaN(+this.codDip()));
 
-  protected hideModal = effect(
+  public disableConfirmCodDip = computed<boolean>(() => this.validateNumberCodDip() || this.codDip().length == 0);
+
+  protected hideModalAndNavigate = effect(
     () => {
-      if (this.store.codDipendente().length) {
+      if (this.store.loggato()) {
         this.visibile.set(false);
+        this.router.navigate(['dashboard']);
       }
     },
     { allowSignalWrites: true }
@@ -61,28 +61,22 @@ export class AppComponent implements OnInit {
 
   protected showMessages = effect(() => {
     const message = this.store.message();
-    if(message.content){
+    if (message.content) {
       this.messageService.add({
         severity: message.severity,
         summary: message.title,
         detail: message.content,
-        life: message.time
+        life: message.time,
       });
     }
   });
 
-  protected navigate = effect(() => {
-    if (this.store.loggato()) {
-      this.router.navigate(['magazzino']);
-    }
-  });
-
   login() {
-    localStorage.setItem('codDip', this.codDipendente);
-    this.store.login(this.codDipendente);
+    localStorage.setItem('codDip', this.codDip());
+    this.store.login(+this.codDip());
   }
 
   salvaNome() {
-    this.store.aggiornaNome(this.nome);
+    this.store.aggiornaNome(this.nome());
   }
 }

@@ -1,7 +1,7 @@
 import { Prodotto } from "./prodotto";
 
 export interface UserData {
-  codDipendente: string;
+  codDipendente: number;
   nome: string,
   prodotti: Prodotto[]
 }

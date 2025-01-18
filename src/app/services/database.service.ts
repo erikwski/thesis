@@ -17,7 +17,7 @@ export class SupabaseService {
   }
 
   /** Controlla se esiste già un utente */
-  async esisteUtente(codDip: string): Promise<boolean> {
+  async esisteUtente(codDip: number): Promise<boolean> {
     const { data, error } = await this.supabase
       .from('utenti')
       .select('id')
@@ -27,7 +27,7 @@ export class SupabaseService {
   }
 
   /** Inizializza un nuovo utente */
-  async creaUtente(codDip: string, name: string): Promise<void> {
+  async creaUtente(codDip: number, name: string): Promise<void> {
     const { error } = await this.supabase.from('utenti').insert([
       {
         id: codDip,
@@ -57,7 +57,7 @@ export class SupabaseService {
   // }
 
   /** Ottieni i dati dell'utente loggato */
-  async datiUtente(codDip: string): Promise<any> {
+  async datiUtente(codDip: number): Promise<any> {
     const { data, error } = await this.supabase
       .from('utenti')
       .select('*')

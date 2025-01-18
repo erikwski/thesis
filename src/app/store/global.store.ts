@@ -7,7 +7,7 @@ import { withLogger } from './logger.feature';
 
 const initialState: UserData = {
   nome: '',
-  codDipendente: '',
+  codDipendente: 0,
   prodotti: [],
 };
 
@@ -16,7 +16,7 @@ export const GlobalStore = signalStore(
   withLogger('User'),
   withRequestStatus(),
   withMethods((store, service = inject(SupabaseService)) => ({
-    async login(codDip: string): Promise<void> {
+    async login(codDip: number): Promise<void> {
       patchState(store, setPending());
       try {
         const exist = await service.esisteUtente(codDip);
@@ -40,7 +40,7 @@ export const GlobalStore = signalStore(
           // se non esiste (primo login dipendente), gli richiedo il nome
           patchState(
             store,
-            (state) => ({ ...state, codDipendente: codDip }),
+            (state) => ({ ...state, codDipendente: codDip, nome: '' }),
             setFulfilled()
           );
           store.showMessage(
@@ -78,7 +78,7 @@ export const GlobalStore = signalStore(
   })),
   withComputed((store) => ({
     loggato: computed(() => {
-      return store.codDipendente().length > 0 && store.nome().length > 0;
+      return store.codDipendente() > 0 && store.nome().length > 0;
     }),
   }))
 );
