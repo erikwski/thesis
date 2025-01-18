@@ -21,6 +21,7 @@
     "@ngrx/signals": "^18.1.1",
     "@primeng/themes": "^18.0.0",
     "@supabase/supabase-js": "^2.47.12",
+    "primeicons": "^7.0.0",
     "primeng": "^18.0.0",
     "rxjs": "~7.8.0",
     "tailwindcss-primeui": "^0.3.4",

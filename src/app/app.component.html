@@ -13,7 +13,7 @@
           <input pInputText id="codDip" class="flex-auto" autocomplete="off" [(ngModel)]="nome" />
       </div>
       <div class="flex justify-end gap-2">
-          <p-button label="Conferma" [disabled]="nome.length == 0" (click)="salvaNome()" />
+          <p-button label="Conferma" [disabled]="nome().length == 0" (click)="salvaNome()" />
       </div>
     }@else {
       <div class="flex justify-center items-center gap-4">

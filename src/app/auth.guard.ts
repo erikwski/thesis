@@ -7,8 +7,8 @@ import { GlobalStore } from './store/global.store';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  router = inject(Router);
-  store = inject(GlobalStore);
+  protected router = inject(Router);
+  protected store = inject(GlobalStore);
 
   canActivate() {
     if (this.store.loggato()) {

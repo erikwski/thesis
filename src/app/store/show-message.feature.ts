@@ -32,7 +32,6 @@ export function withShowMessages() {
     }),
     withMethods((store) => ({
       showMessage(content: string, severity: MessageSeverity, time: number = 3000) {
-        time = 999999999
         patchState(store, () => ({
           message: {
             id: store.message.id() + 1,

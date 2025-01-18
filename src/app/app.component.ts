@@ -54,6 +54,8 @@ export class AppComponent implements OnInit {
       if (this.store.loggato()) {
         this.visibile.set(false);
         this.router.navigate(['dashboard']);
+      }else{
+        this.visibile.set(true);
       }
     },
     { allowSignalWrites: true }

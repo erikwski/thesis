@@ -59,6 +59,13 @@ export const GlobalStore = signalStore(
         );
       }
     },
+    logout(){
+      localStorage.removeItem('codDip');
+      patchState(
+        store,
+        () => initialState,
+      );
+    },
     async aggiornaNome(nome: string) {
       patchState(store, setPending());
       try {
