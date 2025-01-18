@@ -23,12 +23,12 @@ export class ProdottoService {
     pageSize: number,
     searchTerm?: string
   ): Promise<{ data: Prodotto[]; total: number }> {
-
+    const start = page * pageSize;
     let query = this.supabase
       .from('prodotti')
       .select('*', { count: 'exact' })
       .eq('utente', this.store.codDipendente())
-      .range(page, page + pageSize);
+      .range(start, start + pageSize);
 
     // filtrando case insensitive
     if (searchTerm) {

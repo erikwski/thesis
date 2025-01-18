@@ -36,7 +36,7 @@ export const ProdottiStore = signalStore(
           store,
           (state) => ({ 
             ...state, 
-            prodotti: [...store.prodotti(), ...data.data],
+            prodotti: data.data,
             total: data.total,
             page,
             searchTerm
@@ -50,12 +50,12 @@ export const ProdottiStore = signalStore(
         patchState(store, () => initialState);
       }
     },
-  })),
-  withComputed((store) => ({
-    prodottiPaginated: computed(() => {
-      const start = store.page() * store.pageSize();
-      return store.prodotti().slice(start, start + store.pageSize());
-    }),
+    changePageSize(pageSize: number): void {
+      patchState(store, (state) => ({
+        ...state,
+        pageSize
+      }));
+    }
   })),
   withHooks({
     async onInit(store) {
