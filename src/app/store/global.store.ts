@@ -1,21 +1,20 @@
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { UserData } from '../models/userData';
 import { computed, inject } from '@angular/core';
-import { SupabaseService } from '../services/database.service';
 import { setFulfilled, setPending, withRequestStatus } from './request-status.feature';
 import { withLogger } from './logger.feature';
+import { UserService } from '../services/user.service';
 
 const initialState: UserData = {
   nome: '',
   codDipendente: 0,
-  prodotti: [],
 };
 
 export const GlobalStore = signalStore(
   withState(initialState),
   withLogger('User'),
   withRequestStatus(),
-  withMethods((store, service = inject(SupabaseService)) => ({
+  withMethods((store, service = inject(UserService)) => ({
     async login(codDip: number): Promise<void> {
       patchState(store, setPending());
       try {
@@ -32,10 +31,7 @@ export const GlobalStore = signalStore(
             }),
             setFulfilled()
           );
-          store.showMessage(
-            `Login avvenuto con successo`,
-            'success'
-          );
+          store.showMessage(`Login avvenuto con successo`, 'success');
         } else {
           // se non esiste (primo login dipendente), gli richiedo il nome
           patchState(
@@ -53,18 +49,12 @@ export const GlobalStore = signalStore(
         store.setError(
           "C'é stato un problema nel login, riprovare piú tardi o contattare l'assistenza"
         );
-        patchState(
-          store,
-          () => initialState,
-        );
+        patchState(store, () => initialState);
       }
     },
-    logout(){
+    logout() {
       localStorage.removeItem('codDip');
-      patchState(
-        store,
-        () => initialState,
-      );
+      patchState(store, () => initialState);
     },
     async aggiornaNome(nome: string) {
       patchState(store, setPending());
@@ -75,7 +65,10 @@ export const GlobalStore = signalStore(
           (state) => ({ ...state, nome: nome }),
           setFulfilled()
         );
-        store.showMessage(`Benvenuto ${nome}, la registrazione é andata a buon fine`, 'success');
+        store.showMessage(
+          `Benvenuto ${nome}, la registrazione é andata a buon fine`,
+          'success'
+        );
       } catch (error) {
         store.setError(
           "C'é stato un problema nella creazione del nuovo utente, riprovare piú tardi o contattare l'assistenza"

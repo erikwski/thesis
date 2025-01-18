@@ -10,5 +10,5 @@ export interface Prodotto {
   reorderPoint?: number; // Punto di riordino (calcolato o definito)
   eoq?: number; // Lotto Economico di Ordinazione (calcolato)
   totalCost?: number; // Costo totale annuale associato (calcolato)
-  lastUpdated?: Date; // Ultima data di aggiornamento delle informazioni
+  utente: number; // Utente alla quale é collegato
 }

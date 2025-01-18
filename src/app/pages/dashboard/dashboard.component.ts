@@ -5,7 +5,7 @@ import { BadgeModule } from 'primeng/badge';
 import { RippleModule } from 'primeng/ripple';
 import { AvatarModule } from 'primeng/avatar';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { GlobalStore } from '../store/global.store';
+import { GlobalStore } from '../../store/global.store';
 import { NgTemplateOutlet } from '@angular/common';
 import { DrawerModule } from 'primeng/drawer';
 import { ButtonModule } from 'primeng/button';

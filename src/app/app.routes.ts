@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { ProdottiComponent } from './prodotti/prodotti.component';
-import { EoqComponent } from './eoq/eoq.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { ProdottiComponent } from './pages/prodotti/prodotti.component';
+import { EoqComponent } from './pages/eoq/eoq.component';
 import { LogoutComponent } from './logout.component';
-import { NuovoProdottoComponent } from './nuovo-prodotto/nuovo-prodotto.component';
+import { NuovoProdottoComponent } from './pages/nuovo-prodotto/nuovo-prodotto.component';
 
 
 export const routes: Routes = [
