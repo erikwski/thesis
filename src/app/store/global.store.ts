@@ -1,9 +1,8 @@
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { UserData } from '../models/userData';
-import { Prodotto } from '../models/prodotto';
 import { computed, inject } from '@angular/core';
 import { SupabaseService } from '../services/database.service';
-import { setError, setFulfilled, setPending, withRequestStatus } from './request-status.feature';
+import { setFulfilled, setPending, withRequestStatus } from './request-status.feature';
 import { withLogger } from './logger.feature';
 
 const initialState: UserData = {
@@ -12,9 +11,9 @@ const initialState: UserData = {
   prodotti: [],
 };
 
-export const UserStore = signalStore(
+export const GlobalStore = signalStore(
   withState(initialState),
-  withLogger("User"),
+  withLogger('User'),
   withRequestStatus(),
   withMethods((store, service = inject(SupabaseService)) => ({
     async login(codDip: string): Promise<void> {
@@ -33,19 +32,30 @@ export const UserStore = signalStore(
             }),
             setFulfilled()
           );
-        }else{
+          store.showMessage(
+            `Login avvenuto con successo`,
+            'success'
+          );
+        } else {
           // se non esiste (primo login dipendente), gli richiedo il nome
           patchState(
             store,
             (state) => ({ ...state, codDipendente: codDip }),
             setFulfilled()
           );
+          store.showMessage(
+            `É il tuo primo login in piattaforma, come ti chiami?`,
+            'info',
+            5000
+          );
         }
       } catch (error) {
+        store.setError(
+          "C'é stato un problema nel login, riprovare piú tardi o contattare l'assistenza"
+        );
         patchState(
           store,
           () => initialState,
-          setError("C'é stato un problema nel login, riprovare piú tardi o contattare l'assistenza")
         );
       }
     },
@@ -53,14 +63,16 @@ export const UserStore = signalStore(
       patchState(store, setPending());
       try {
         await service.creaUtente(store.codDipendente(), nome);
-        patchState(store, (state) => ({ ...state, nome: nome }), setFulfilled());
+        patchState(
+          store,
+          (state) => ({ ...state, nome: nome }),
+          setFulfilled()
+        );
+        store.showMessage(`Benvenuto ${nome}, la registrazione é andata a buon fine`, 'success');
       } catch (error) {
-         patchState(
-           store,
-           setError(
-             "C'é stato un problema nella creazione del nuovo utente, riprovare piú tardi o contattare l'assistenza"
-           )
-         );
+        store.setError(
+          "C'é stato un problema nella creazione del nuovo utente, riprovare piú tardi o contattare l'assistenza"
+        );
       }
     },
   })),

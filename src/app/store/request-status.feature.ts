@@ -1,5 +1,6 @@
 import { computed } from '@angular/core';
-import { signalStoreFeature, withComputed, withState } from '@ngrx/signals';
+import { patchState, signalStoreFeature, withComputed, withMethods, withState } from '@ngrx/signals';
+import { withShowMessages } from './show-message.feature';
 
 export type RequestStatus =
   | 'idle'
@@ -12,6 +13,7 @@ export type RequestStatusState = { requestStatus: RequestStatus };
 export function withRequestStatus() {
   return signalStoreFeature(
     withState<RequestStatusState>({ requestStatus: 'idle' }),
+    withShowMessages(),
     withComputed(({ requestStatus }) => ({
       isPending: computed(() => requestStatus() === 'pending'),
       isFulfilled: computed(() => requestStatus() === 'fulfilled'),
@@ -19,6 +21,12 @@ export function withRequestStatus() {
         const status = requestStatus();
         return typeof status === 'object' ? status.error : null;
       }),
+    })),
+    withMethods((store) => ({
+      setError(error: string) {
+        store.showMessage(error, 'error', 5000);
+        patchState(store, { requestStatus: { error } });
+      },
     }))
   );
 }
@@ -29,8 +37,4 @@ export function setPending(): RequestStatusState {
 
 export function setFulfilled(): RequestStatusState {
   return { requestStatus: 'fulfilled' };
-}
-
-export function setError(error: string): RequestStatusState {
-  return { requestStatus: { error } };
 }

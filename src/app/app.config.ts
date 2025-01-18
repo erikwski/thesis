@@ -7,7 +7,7 @@ import { definePreset } from '@primeng/themes';
 import Aura from '@primeng/themes/aura';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthGuard } from './auth.guard';
-import { UserStore } from './store/user.store';
+import { GlobalStore } from './store/global.store';
 
 const Noir = definePreset(Aura, {
   semantic: {
@@ -61,7 +61,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     BrowserModule,
     AuthGuard,
-    UserStore,
+    GlobalStore,
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),

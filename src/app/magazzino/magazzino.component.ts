@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { UserStore } from '../store/user.store';
+import { GlobalStore } from '../store/global.store';
 
 @Component({
   selector: 'app-magazzino',
@@ -9,9 +9,9 @@ import { UserStore } from '../store/user.store';
   styleUrl: './magazzino.component.scss',
 })
 export class MagazzinoComponent {
-  protected user = inject(UserStore);
+  protected store = inject(GlobalStore);
 
   get nome (){
-    return this.user.nome();
+    return this.store.nome();
   }
 }

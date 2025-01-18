@@ -1,9 +1,9 @@
-@if(user.isPending()){
+@if(store.isPending()){
   <div class="loading-screen">
       <p-progress-spinner ariaLabel="loading" />
   </div>
 }@else {
-  <p-dialog header="Digita il tuo identificativo" [modal]="true" [visible]="visibile()" [closable]="false" [style]="{ width: '25rem' }">
+  <p-dialog header="Digita il tuo identificativo" [modal]="true" [visible]="visibile()" [closable]="false" [style]="{ width: '25rem' }" maskStyleClass="none">
       <div class="flex justify-center items-center gap-4 mb-4">
           <label for="username" class="font-semibold w-24">Codice</label>
           <input pInputText id="codDip" class="flex-auto" autocomplete="off" [(ngModel)]="codDipendente" />
@@ -13,7 +13,7 @@
       </div>
   </p-dialog>
   @if(newUser()){
-    <p-dialog header="Benvenuto, inserisci il tuo nome" [modal]="true" [visible]="showName()" [closable]="false" [style]="{ width: '25rem' }">
+    <p-dialog header="Benvenuto, inserisci il tuo nome" [modal]="true" [visible]="showName()" [closable]="false" [style]="{ width: '25rem' }" maskStyleClass="none">
       <div class="flex justify-start items-center gap-4 mb-4">
         <b>Identificativo: {{this.codDipendente}}</b>
       </div>
@@ -28,3 +28,4 @@
   }
   <router-outlet></router-outlet>
 }
+<p-toast />

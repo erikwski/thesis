@@ -9,3 +9,10 @@
 h1, h2, h3, h4, h5, h6{
   font-weight: 800;
 }
+/** 
+I toast message venivano nascondi da lo sfondo dei modali/dialog, 
+incrementato globalmente per evitare che accada e non avere problemi di shadow-dom
+*/
+.p-toast{
+  z-index: 9999 !important;
+}
