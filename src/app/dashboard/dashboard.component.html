@@ -1,34 +1,47 @@
 <div class="flex p-4">
   <!-- CONTAINER SIDEBAR -->
   <div class="basis-0">
-    <p-menu [model]="items" class="flex justify-center" styleClass="w-full md:w-60">
+    <div class="hidden lg:block">
+      <ng-container [ngTemplateOutlet]="menu"></ng-container>
+    </div>
+  </div>
+  <!-- CONTENT -->
+  <div class="w-full">
+    <div class="block lg:hidden">
+      <button pButton (click)="visible.set(true)" icon="pi pi-bars"></button>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<p-drawer [(visible)]="visible" header="">
+  <ng-template #header [ngTemplateOutlet]="menu"></ng-template>
+</p-drawer>
+
+<ng-template #menu>
+  <p-menu [model]="items" class="flex justify-center" styleClass="w-full md:w-60">
       <ng-template #start>
-          <span class="w-full flex justify-center">
+          <a href="/dashboard" class="w-full flex justify-center" title="Torna alla home">
             <img src="assets/logo.png" width="64" />
-          </span>
+          </a>
       </ng-template>
       <ng-template #submenuheader let-item>
           <span class="text-primary font-bold">{{ item.label }}</span>
       </ng-template>
       <ng-template #item let-item>
-        <a [routerLink]="item.route" class="p-menu-item-link" pRipple>
+        <a [routerLink]="item.route" routerLinkActive="active-link" class="p-menu-item-link" pRipple>
           <span [class]="item.icon"></span>
           <span class="ml-2">{{ item.label }}</span>
         </a>
       </ng-template>
       <ng-template #end>
           <button pRipple class="relative overflow-hidden w-full border-0 bg-transparent flex items-start p-2 pl-4 rounded-none cursor-auto transition-colors duration-200">
-              <p-avatar label="P" styleClass="mr-2" size="large" shape="circle" />
-              <span class="inline-flex flex-col">
-                  <span class="font-bold">Amy Elsner</span>
-                  <span class="text-sm">Admin</span>
+              <p-avatar [label]="iniziale()" styleClass="mr-2" size="large" shape="circle" />
+              <span class="inline-flex flex-col justify-start text-start">
+                  <span class="font-bold">{{ store.nome() }}</span>
+                  <span class="text-sm">Codice: {{ store.codDipendente() }}</span>
               </span>
           </button>
       </ng-template>
   </p-menu>
-  </div>
-  <!-- CONTENT -->
-  <div class="basis-1">
-    bella
-  </div>
-</div>
+</ng-template>

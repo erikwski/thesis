@@ -1,0 +1,6 @@
+.active-link{
+  background: black;
+  border-radius: var(--p-navigation-item-border-radius);
+  transition: .3s ease-in;
+  pointer-events: none;
+}
