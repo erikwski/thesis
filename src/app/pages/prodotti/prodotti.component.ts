@@ -89,9 +89,7 @@ export class ProdottiComponent {
     }
   }
 
-  public pageChange(event: PaginatorState) {
-    console.warn("event", event);
-    
+  public pageChange(event: PaginatorState) {    
     if (event.rows && event.rows != this.store.pageSize()) {
       // se cambia pageSize
       this.store.changePageSize(event.rows);

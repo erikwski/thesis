@@ -12,3 +12,22 @@ export interface Prodotto {
   totalCost?: number; // Costo totale annuale associato (calcolato)
   utente: number; // Utente alla quale é collegato
 }
+
+export class ProdottoDto {
+  static fromAPIResponse(data: any): Prodotto {
+    return {
+      id: String(data.id),
+      name: data.name,
+      description: data.description ?? undefined, 
+      annualDemand: data.annual_demand.toFixed(2),
+      setupCost: data.setup_cost.toFixed(2),
+      holdingCostPerUnit: data.holding_cost_per_unit.toFixed(2),
+      unitCost: data.unit_cost.toFixed(2),
+      leadTime: data.lead_time.toFixed(2),
+      reorderPoint: data.reorder_point ?? undefined,
+      eoq: data.eoq ?? undefined,
+      totalCost: data.total_cost ?? undefined,
+      utente: data.utente,
+    };
+  }
+}

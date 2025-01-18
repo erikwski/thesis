@@ -4,7 +4,7 @@ import { computed, inject } from '@angular/core';
 import { setFulfilled, setPending, withRequestStatus } from './request-status.feature';
 import { withLogger } from './logger.feature';
 import { UserService } from '../services/user.service';
-import { Prodotto } from '../models/prodotto';
+import { Prodotto, ProdottoDto } from '../models/prodotto';
 import { ProdottoService } from '../services/prodotti.service';
 
 type ProdottoState = {
@@ -36,7 +36,7 @@ export const ProdottiStore = signalStore(
           store,
           (state) => ({ 
             ...state, 
-            prodotti: data.data,
+            prodotti: data.data.map(prodotto=> ProdottoDto.fromAPIResponse(prodotto)),
             total: data.total,
             page,
             searchTerm
