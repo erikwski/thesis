@@ -18,15 +18,32 @@ export class ProdottoDto {
     return {
       id: String(data.id),
       name: data.name,
-      description: data.description ?? undefined, 
-      annualDemand: data.annual_demand.toFixed(2),
+      description: data.description ?? undefined,
+      annualDemand: data.annual_demand,
       setupCost: data.setup_cost.toFixed(2),
       holdingCostPerUnit: data.holding_cost_per_unit.toFixed(2),
       unitCost: data.unit_cost.toFixed(2),
-      leadTime: data.lead_time.toFixed(2),
+      leadTime: data.lead_time,
       reorderPoint: data.reorder_point ?? undefined,
       eoq: data.eoq ?? undefined,
       totalCost: data.total_cost ?? undefined,
+      utente: data.utente,
+    };
+  }
+
+  static toAPIResponse(data: Partial<Prodotto>): any {
+    return {
+      id: data.id,
+      name: data.name,
+      description: data.description ?? undefined,
+      annual_demand: Math.abs(Number(data.annualDemand)) ?? 0,
+      setup_cost: Number(data.setupCost) ?? 0,
+      holding_cost_per_unit: Number(data.holdingCostPerUnit) ?? 0,
+      unit_cost: Number(data.unitCost) ?? 0,
+      lead_time: Math.abs(Number(data.leadTime)) ?? 0,
+      // reorder_point: Number(data.reorderPoint) ?? undefined,
+      // eoq: Number(data.eoq) ?? undefined,
+      // total_cost: Number(data.totalCost) ?? undefined,
       utente: data.utente,
     };
   }
@@ -36,7 +53,7 @@ export const DEFAULT_PRODOTTO: Prodotto = {
   id: '',
   name: '',
   description: '',
-  annualDemand: 1,
+  annualDemand: 0,
   setupCost: 0,
   holdingCostPerUnit: 0,
   unitCost: 0,

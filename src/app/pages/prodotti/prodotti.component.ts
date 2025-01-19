@@ -136,7 +136,11 @@ export class ProdottiComponent implements OnInit {
     });
   }
 
-  public salvaModifiche(prodotto: Prodotto) {}
+  public async salvaModifiche(prodotto: Prodotto) {
+    await this.store.aggiornaProdotto(prodotto);
+    this.modificaProdotto.set(null);
+    this.mostraModifica.set(false);
+  }
 
   public search() {
     if (this.filterChanged()) {

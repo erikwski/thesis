@@ -74,7 +74,44 @@ export const ProdottiStore = signalStore(
         store.setError(
           "Impossibile eliminare il prodotto, riprovare piú tardi o contattare l'assistenza"
         );
-        patchState(store, () => initialState);
+        patchState(store, () => initialState, setFulfilled());
+      }
+    },
+    async aggiornaProdotto(prodotto: Prodotto): Promise<void> {
+      patchState(store, setPending());
+      try {
+        await service.updateProdotto(prodotto.id, ProdottoDto.toAPIResponse(prodotto));
+        //se andata a buon fine, elimino il prodotto dalla lista
+        patchState(
+          store,
+          (state) => ({
+            ...state,
+            prodotti: store
+              .prodotti()
+              .map((el) => (el.id === prodotto.id ? prodotto : el)),
+          }),
+          setFulfilled()
+        );
+      } catch (error) {
+        store.setError(
+          "Impossibile aggiornare il prodotto, riprovare piú tardi o contattare l'assistenza"
+        );
+        patchState(store, () => initialState, setFulfilled());
+      }
+    },
+    async creaProdotto(prodotto: Prodotto, codDip: number): Promise<void> {
+      patchState(store, setPending());
+      const newProd = ProdottoDto.toAPIResponse(prodotto);
+      if(newProd.id) delete newProd.id;
+      newProd.utente = codDip;
+      try {
+        await service.addProdotto(newProd);
+        setFulfilled();
+      } catch (error) {
+        store.setError(
+          "Impossibile creare il prodotto, riprovare piú tardi o contattare l'assistenza"
+        );
+        patchState(store, () => initialState, setFulfilled());
       }
     },
     changePageSize(pageSize: number): void {

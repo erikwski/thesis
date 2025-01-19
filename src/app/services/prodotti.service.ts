@@ -22,6 +22,7 @@ export class ProdottoService {
       .from('prodotti')
       .select('*', { count: 'exact' })
       .eq('utente', this.store.codDipendente())
+      .order('id')
       .range(start, start + pageSize);
 
     // filtrando case insensitive

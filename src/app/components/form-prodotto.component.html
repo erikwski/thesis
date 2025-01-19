@@ -11,11 +11,15 @@
               [placeholder]="fields[field].placeholder"
             />
              @if(prodottoForm.controls[field]?.touched && prodottoForm.controls[field]?.invalid){
-               <small class="text-red-600">{{ fields[field].label }} is required.</small>
+               <small class="text-red-600">{{ fields[field].label }} deve avere un valore.</small>
              }
         </div>
       }
-
-    <button pButton type="submit" [label]="buttonText()" class=" ml-auto" [disabled]="prodottoForm.invalid"></button>
+      <div class="w-full text-right">
+        <button pButton type="submit" [label]="buttonText()" class=" ml-auto" [disabled]="prodottoForm.invalid"></button>
+      </div>`
+      <div class="w-full text-right">
+        <i class="text-gray-500">{{ campiNonValidi() }}</i>
+      </div>
   </form>
 </div>
