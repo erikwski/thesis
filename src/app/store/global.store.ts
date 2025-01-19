@@ -15,7 +15,7 @@ export const GlobalStore = signalStore(
   withLogger('User'),
   withRequestStatus(),
   withMethods((store, service = inject(UserService)) => ({
-    async login(codDip: number): Promise<void> {
+    async login(codDip: number, showSuccess : boolean = false): Promise<void> {
       patchState(store, setPending());
       try {
         const exist = await service.esisteUtente(codDip);
@@ -31,7 +31,8 @@ export const GlobalStore = signalStore(
             }),
             setFulfilled()
           );
-          store.showMessage(`Login avvenuto con successo`, 'success');
+          if (showSuccess)
+            store.showMessage(`Login avvenuto con successo`, 'success');
         } else {
           // se non esiste (primo login dipendente), gli richiedo il nome
           patchState(

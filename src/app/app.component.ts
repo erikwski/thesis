@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
 
   login() {
     localStorage.setItem('codDip', this.codDip());
-    this.store.login(+this.codDip());
+    this.store.login(+this.codDip(), true);
   }
 
   salvaNome() {
