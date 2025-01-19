@@ -3,20 +3,14 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { Prodotto } from '../models/prodotto';
 import { environment } from '../../environments/environment';
 import { GlobalStore } from '../store/global.store';
+import { SupabaseService } from './supabase.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProdottoService {
-  protected supabase: SupabaseClient;
+  protected supabase = inject(SupabaseService).supabase;
   protected store = inject(GlobalStore);
-
-  constructor() {
-    this.supabase = createClient(
-      environment.supabaseUrl,
-      environment.supabaseKey
-    );
-  }
 
   async getPaginatedProdotti(
     page: number,

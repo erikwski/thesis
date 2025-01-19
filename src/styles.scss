@@ -19,3 +19,7 @@ max-width per migliorare la responsiveness del componente che su piccoli device 
   z-index: 9999 !important;
   max-width: calc(100% - 40px);
 }
+
+.p-message-content{
+  justify-content: center;
+}

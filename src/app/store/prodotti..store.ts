@@ -31,15 +31,21 @@ export const ProdottiStore = signalStore(
     async search(page: number, searchTerm: string): Promise<void> {
       patchState(store, setPending());
       try {
-        const data = await service.getPaginatedProdotti(page, store.pageSize(), searchTerm);
+        const data = await service.getPaginatedProdotti(
+          page,
+          store.pageSize(),
+          searchTerm
+        );
         patchState(
           store,
-          (state) => ({ 
-            ...state, 
-            prodotti: data.data.map(prodotto=> ProdottoDto.fromAPIResponse(prodotto)),
+          (state) => ({
+            ...state,
+            prodotti: data.data.map((prodotto) =>
+              ProdottoDto.fromAPIResponse(prodotto)
+            ),
             total: data.total,
             page,
-            searchTerm
+            searchTerm,
           }),
           setFulfilled()
         );
@@ -50,17 +56,35 @@ export const ProdottiStore = signalStore(
         patchState(store, () => initialState);
       }
     },
+    async eliminaProdotto(prodottoId: string): Promise<void> {
+      patchState(store, setPending());
+      try {
+        await service.deleteProdotto(prodottoId);
+        //se andata a buon fine, elimino il prodotto dalla lista
+        patchState(
+          store,
+          (state) => ({
+            ...state,
+            prodotti: store.prodotti().filter((el) => el.id !== prodottoId),
+            total: store.total() - 1,
+          }),
+          setFulfilled()
+        );
+      } catch (error) {
+        store.setError(
+          "Impossibile eliminare il prodotto, riprovare piú tardi o contattare l'assistenza"
+        );
+        patchState(store, () => initialState);
+      }
+    },
     changePageSize(pageSize: number): void {
       patchState(store, (state) => ({
         ...state,
-        pageSize
+        pageSize,
       }));
-    }
-  })),
-  withHooks({
-    async onInit(store) {
-      // Alla prima instanza dello store, carico i primi dati
-      store.search(0, "");
     },
-  })
+    logout(): void {
+      patchState(store, () => initialState);
+    },
+  }))
 );

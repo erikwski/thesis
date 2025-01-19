@@ -1,4 +1,4 @@
-import { Component, computed, inject, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, model } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { BadgeModule } from 'primeng/badge';
@@ -15,6 +15,7 @@ import { ButtonModule } from 'primeng/button';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MenuModule,
     BadgeModule,

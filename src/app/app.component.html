@@ -3,7 +3,7 @@
       <p-progress-spinner ariaLabel="loading" />
   </div>
 }@else {
-  <p-dialog header="Digita il tuo identificativo" [modal]="true" [visible]="visibile()" [closable]="false" [style]="{ width: '25%', minWidth: '20rem' }" maskStyleClass="none">
+  <p-dialog header="Digita il tuo identificativo" [modal]="true" [visible]="visibile()" [closable]="false" [style]="{ width: '25%', minWidth: '20rem' }" maskStyleClass="none" [draggable]="false">
     @if(newUser()){
       <div class="flex justify-start items-center gap-4 mb-4">
         <b>Identificativo: {{this.codDip()}}</b>

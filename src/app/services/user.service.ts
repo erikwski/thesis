@@ -1,20 +1,12 @@
-import { Injectable } from '@angular/core';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { environment } from '../../environments/environment'; // Se usi variabili di ambiente
+import { inject, Injectable } from '@angular/core';
+import { SupabaseService } from './supabase.service';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  protected supabase: SupabaseClient;
-
-  constructor() {
-    this.supabase = createClient(
-      environment.supabaseUrl,
-      environment.supabaseKey
-    );
-  }
+  protected supabase = inject(SupabaseService).supabase;
 
   /** Controlla se esiste già un utente */
   async esisteUtente(codDip: number): Promise<boolean> {
