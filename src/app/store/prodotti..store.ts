@@ -79,6 +79,7 @@ export const ProdottiStore = signalStore(
             }),
             setFulfilled()
           );
+          global.showMessage(`Prodotto eliminato correttamente`, 'success');
         } catch (error: any) {
           global.setError(
             `Impossibile eliminare il prodotto, ${
@@ -106,6 +107,7 @@ export const ProdottiStore = signalStore(
             }),
             setFulfilled()
           );
+          global.showMessage(`Prodotto aggiornato correttamente`, 'success');
         } catch (error : any) {
           global.setError(
             `Impossibile aggiornare il prodotto, ${
@@ -123,6 +125,7 @@ export const ProdottiStore = signalStore(
         try {
           const res = await service.addProdotto(newProd);
           setFulfilled();
+          global.showMessage(`Prodotto creato correttamente`, 'success');
           return res;
         } catch (error: any) {
           global.setError(
