@@ -22,7 +22,9 @@ export class ProdottoService {
       .from('prodotti')
       .select('*', { count: 'exact' })
       .eq('utente', this.store.codDipendente())
-      .order('id')
+      .order('id', {
+        ascending: false
+      })
       .range(start, start + pageSize);
 
     // filtrando case insensitive

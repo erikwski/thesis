@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, effect, inject, model, OnInit, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, effect, inject, model, OnInit, signal, viewChild } from '@angular/core';
 import { ProdottiStore } from '../../store/prodotti..store';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
@@ -9,7 +9,7 @@ import { Prodotto } from '../../models/prodotto';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { Paginator, PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { MessageModule } from 'primeng/message';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ConfirmationService } from 'primeng/api';
@@ -46,10 +46,12 @@ type ColonneTabella = {
   templateUrl: './prodotti.component.html',
   styleUrl: './prodotti.component.scss',
 })
-export class ProdottiComponent implements OnInit {
+export class ProdottiComponent implements AfterViewInit {
   public store = inject(ProdottiStore);
   protected cdr = inject(ChangeDetectorRef);
   protected confirmationService = inject(ConfirmationService);
+
+  protected paginatorEl = viewChild<Paginator>('paginator');
 
   protected filterChanged = signal(false);
 
@@ -105,9 +107,15 @@ export class ProdottiComponent implements OnInit {
     { allowSignalWrites: true }
   );
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.filterChanged.set(true);
-    this.search();
+    if (this.store.prodotti().length > 0 || this.store.page() > 0 ) {
+      // store giá presente vecchi record, aggiorno paginator
+      this.paginatorEl()!.changePage(this.store.page());
+      this.cdr.detectChanges();
+    } else {
+      this.search();
+    }
   }
 
   public onRowEditInit(prodotto: Prodotto) {

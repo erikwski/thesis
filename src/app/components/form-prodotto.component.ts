@@ -99,6 +99,7 @@ export class FormProdottoComponent {
     this.prodottoForm.patchValue({
       ...this.prodotto(),
     });
+    this.prodottoForm.markAsPristine();
   });
 
   public isRequired(field: string) {
