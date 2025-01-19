@@ -10,7 +10,7 @@ export interface Prodotto {
   reorderPoint?: number; // Punto di riordino (calcolato o definito)
   eoq?: number; // Lotto Economico di Ordinazione (calcolato)
   totalCost?: number; // Costo totale annuale associato (calcolato)
-  utente: number; // Utente alla quale é collegato
+  utente?: number; // Utente alla quale é collegato
 }
 
 export class ProdottoDto {
@@ -31,3 +31,14 @@ export class ProdottoDto {
     };
   }
 }
+
+export const DEFAULT_PRODOTTO: Prodotto = {
+  id: '',
+  name: '',
+  description: '',
+  annualDemand: 1,
+  setupCost: 0,
+  holdingCostPerUnit: 0,
+  unitCost: 0,
+  leadTime: 0,
+};

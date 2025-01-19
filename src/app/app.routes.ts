@@ -25,8 +25,8 @@ export const routes: Routes = [
         path: 'eoq',
         component: EoqComponent,
       },
-      {path: '', redirectTo: 'prodotti', pathMatch: 'full'},
-      {path: '**', redirectTo: 'prodotti'}
+      { path: '', redirectTo: 'prodotti', pathMatch: 'full' },
+      { path: '**', redirectTo: 'prodotti' },
     ],
   },
   {

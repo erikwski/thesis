@@ -9,6 +9,7 @@ import { GlobalStore } from '../../store/global.store';
 import { NgTemplateOutlet } from '@angular/common';
 import { DrawerModule } from 'primeng/drawer';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-dasboard',
@@ -26,6 +27,7 @@ import { ButtonModule } from 'primeng/button';
     NgTemplateOutlet,
     DrawerModule,
     ButtonModule,
+    CardModule,
     RouterLinkActive
   ],
 })

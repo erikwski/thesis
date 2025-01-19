@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, effect, inject, model, OnInit, signal } from '@angular/core';
 import { ProdottiStore } from '../../store/prodotti..store';
-import { TableModule, TablePageEvent } from 'primeng/table';
+import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
@@ -14,7 +14,7 @@ import { MessageModule } from 'primeng/message';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ConfirmationService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
-import { FormProdottoComponent } from "../../components/form-prodotto.component";
+import { FormProdottoComponent } from '../../components/form-prodotto.component';
 
 
 type ColonneTabella = {
@@ -40,8 +40,8 @@ type ColonneTabella = {
     MessageModule,
     ConfirmPopupModule,
     DialogModule,
-    FormProdottoComponent
-],
+    FormProdottoComponent,
+  ],
   providers: [ConfirmationService],
   templateUrl: './prodotti.component.html',
   styleUrl: './prodotti.component.scss',
@@ -52,6 +52,8 @@ export class ProdottiComponent implements OnInit {
   protected confirmationService = inject(ConfirmationService);
 
   protected filterChanged = signal(false);
+
+  public mostraModifica = model(false);
 
   public modificaProdotto = signal<Prodotto | null>(null);
 
@@ -64,10 +66,6 @@ export class ProdottiComponent implements OnInit {
   );
 
   public disableNoData = computed(() => this.store.prodotti().length == 0);
-
-  public openDialog = computed(
-    () => (this.modificaProdotto()?.id.length ?? 0) > 0
-  );
 
   public colonneTabella: ColonneTabella[] = [
     {
@@ -114,6 +112,7 @@ export class ProdottiComponent implements OnInit {
 
   public onRowEditInit(prodotto: Prodotto) {
     this.modificaProdotto.set(prodotto);
+    this.mostraModifica.set(true);
   }
 
   public onDeleteProduct(event: Event, prodotto: Prodotto) {
@@ -137,7 +136,7 @@ export class ProdottiComponent implements OnInit {
     });
   }
 
-  public salvaModifiche(){}
+  public salvaModifiche(prodotto: Prodotto) {}
 
   public search() {
     if (this.filterChanged()) {

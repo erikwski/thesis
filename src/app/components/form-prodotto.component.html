@@ -1,0 +1,21 @@
+<div class="p-fluid">
+  <form [formGroup]="prodottoForm" (ngSubmit)="onSubmit()" class="flex flex-wrap">
+    <!-- Loop through the fields record to dynamically render the form fields -->
+      @for( field of getFieldKeys(); track $index){
+        <div class="flex flex-col gap-2 basis-{{ fields[field].col }} p-4">
+            <label [for]="field">{{ fields[field].label }}{{ isRequired(field) ? ' *' : '' }}</label>
+            <input
+              [type]="fields[field].type"
+              pInputText
+              [formControlName]="field"
+              [placeholder]="fields[field].placeholder"
+            />
+             @if(prodottoForm.controls[field]?.touched && prodottoForm.controls[field]?.invalid){
+               <small class="text-red-600">{{ fields[field].label }} is required.</small>
+             }
+        </div>
+      }
+
+    <button pButton type="submit" [label]="buttonText()" class=" ml-auto" [disabled]="prodottoForm.invalid"></button>
+  </form>
+</div>
