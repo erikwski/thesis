@@ -1,8 +1,8 @@
 {
   "targets": {
     "release": {
-      "outFile": "src/assets/assembly/build/release.wasm",
-      "textFile": "src/assets/assembly/build/release.wat",
+      "outFile": "src/assets/assembly/index.wasm",
+      "textFile": "src/assets/assembly/index.wat",
       "sourceMap": true,
       "optimizeLevel": 3,
       "shrinkLevel": 0,

@@ -1,20 +1,15 @@
 <div class="flex gap-4 justify-center items-end">
   <div class="flex flex-col gap-2">
     <label>Punto di riordino</label>
-    <input pInputText [value]="prodotto().reorderPoint ?? ''" disabled/>
+    <input pInputText [value]="'4'" disabled/>
   </div>
   <div class="flex flex-col gap-2">
     <label>EOQ</label>
-    <input pInputText [value]="prodotto().eoq ?? ''" disabled/>
+    <input pInputText [value]="'4'" disabled/>
   </div>
   <div class="flex flex-col gap-2">
     <label>Costo totale</label>
-    <input pInputText [value]="prodotto().totalCost ?? ''" disabled/>
+    <input pInputText [value]="'4'" disabled/>
   </div>
   <p-button label="Calcola" severity="warn"/>
 </div>
-@if(valoriCalcolati()){
-  <div class="w-full text-center mt-1">
-    <i class="text-gray-500">I valori non sono ancora mai stati calcolati</i>
-  </div>
-}

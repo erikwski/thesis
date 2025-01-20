@@ -22,6 +22,4 @@ export class EoqComponent implements OnInit {
   }
 
   calcolateReady = computed(() => this.eoqService.isLoaded());
-
-  valoriCalcolati = computed(()=> this.prodotto().eoq === undefined && this.prodotto().reorderPoint === undefined && this.prodotto().totalCost === undefined)
 }

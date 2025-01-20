@@ -1,5 +1,4 @@
 import { inject, Injectable } from '@angular/core';
-import * as webAssembly from '../../assets/assembly/build/release.js';
 import { WasmLoaderService } from './webAssembly.service.js';
 
 @Injectable({

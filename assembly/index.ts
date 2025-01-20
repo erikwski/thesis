@@ -25,17 +25,10 @@ export function calculateTotalCost(
 // Function to calculate the reorder point
 export function calculateReorderPoint(
   leadTime: f64,
-  annualDemand: f64,
-  workingDays: f64 = 365
+  annualDemand: f64
 ): f64 {
-  if (leadTime <= 0 || annualDemand <= 0 || workingDays <= 0) {
-    throw new Error(
-      'Lead time, annual demand, and working days must be greater than zero.'
-    );
-  }
-
   // Calcolo costi singolarmente, fatto inline per maggiori performance
   // const averageDailyDemand: f64 = annualDemand / workingDays;
 
-  return (leadTime * annualDemand) / workingDays;
+  return (leadTime * annualDemand) / 365;
 }
