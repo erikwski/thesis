@@ -28,7 +28,7 @@ import { CardModule } from 'primeng/card';
     DrawerModule,
     ButtonModule,
     CardModule,
-    RouterLinkActive
+    RouterLinkActive,
   ],
 })
 export class DashboardComponent {
@@ -56,9 +56,9 @@ export class DashboardComponent {
           route: '/dashboard/nuovoProdotto',
         },
         {
-          label: 'Eoq',
+          label: 'Benchmark',
           icon: 'pi pi-calculator',
-          route: '/dashboard/eoq',
+          route: '/dashboard/benchMark',
         },
       ],
     },

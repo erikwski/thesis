@@ -32,3 +32,18 @@ export function calculateReorderPoint(
 
   return (leadTime * annualDemand) / 365;
 }
+
+export function benchmarkCalculations(iterations: i32): f64 {
+  let accumulatedResult: f64 = 0.0;
+
+  for (let i = 0; i < iterations; i++) {
+    // Perform calculations
+    const eoq: f64 = calculateEOQ(1000, 50, 2);
+    const totalCost: f64 = calculateTotalCost(1000, 50, 2, 20, eoq);
+    const reorderPoint: f64 = calculateReorderPoint(10, 1000);
+
+    // Accumulate results (to simulate usage of results)
+    accumulatedResult += reorderPoint + totalCost + eoq;
+  }
+  return accumulatedResult;
+}

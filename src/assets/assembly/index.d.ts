@@ -25,3 +25,9 @@ export declare function calculateTotalCost(annualDemand: number, setupCost: numb
  * @returns `f64`
  */
 export declare function calculateReorderPoint(leadTime: number, annualDemand: number): number;
+/**
+ * assembly/index/benchmarkCalculations
+ * @param iterations `i32`
+ * @returns `f64`
+ */
+export declare function benchmarkCalculations(iterations: number): number;

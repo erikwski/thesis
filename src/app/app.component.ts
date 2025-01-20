@@ -8,9 +8,6 @@ import { GlobalStore } from './store/global.store';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { Toast } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-import { EoqService } from './services/eoq.service';
-import { WasmLoaderService } from './services/webAssembly.service';
-import { benchmarkJavaScript } from '../assets/benchmark/run';
 
 @Component({
   selector: 'app-root',
@@ -33,7 +30,6 @@ export class AppComponent implements OnInit {
   protected router = inject(Router);
   protected messageService = inject(MessageService);
   public store = inject(GlobalStore);
-  public service = inject(WasmLoaderService);
 
   codDip = model<string>('');
   nome = model<string>('');
@@ -44,35 +40,6 @@ export class AppComponent implements OnInit {
     if (this.codDip().length) {
       this.store.login(+this.codDip());
     }
-
-    setTimeout(()=>{
-      this.service.loadWasm().then(()=>{
-        const start = performance.now();
-    
-        for (let i = 0; i < 99999999; i++) {
-          const eoq = this.service.callFunction('calculateEOQ', 1000, 50, 2);
-          const totalCost = this.service.callFunction(
-            'calculateTotalCost',
-            1000,
-            50,
-            2,
-            20,
-            eoq
-          );
-          const reorderPoint = this.service.callFunction(
-            'calculateReorderPoint',
-            10,
-            1000,
-            250
-          );
-        }
-    
-        const end = performance.now();
-        console.log('WebAssembly Execution Time:', end - start, 'ms');
-      })
-    }, 5000)
-
-    benchmarkJavaScript();
   }
 
   public newUser = computed(

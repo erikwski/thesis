@@ -1,0 +1,79 @@
+<p-panel header="Performance Benchmark" styleClass="p-mb-3">
+  <div class="flex mb-3 justify-center items-end gap-4">
+    <!-- Input for Number of Samples -->
+    <div class="flex flex-col gap-2">
+      <label for="samples">Number of Samples</label>
+      <input 
+        id="samples" 
+        type="text" 
+        pInputText 
+        [(ngModel)]="numeroDiEsempi" 
+        placeholder="Enter number of iterations" 
+      />
+    </div>
+
+    <button 
+      pButton 
+      label="Run BenchMark" 
+      icon="pi pi-cog" 
+      class="p-button-raised p-button-success" 
+      (click)="runBenchmark()">
+    </button>
+  </div>
+  
+
+  <p-table [value]="risultati" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template #header>
+      <tr>
+        <th>Campioni</th>
+        <th>WASM tempo</th>
+        <th>WASM valore</th>
+        <th>JS tempo</th>
+        <th>JS valore</th>
+        <th>WASM performance</th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-data>
+      <tr>
+        <td>
+          {{ data.campioni }}
+        </td>
+        <td>
+          @if(data.tempoWasm == null){
+            <p-progress-spinner ariaLabel="loading" [style.width.px]="32" [style.height.px]="32"/>
+          }@else {
+            {{ data.tempoWasm }}
+          }
+        </td>
+        <td>
+          @if(data.tempoWasm == null){
+            <p-progress-spinner ariaLabel="loading" [style.width.px]="32" [style.height.px]="32"/>
+          }@else {
+            {{ data.valoreWasm }}
+          }
+        </td>
+        <td>
+          @if(data.tempoWasm == null){
+            <p-progress-spinner ariaLabel="loading" [style.width.px]="32" [style.height.px]="32"/>
+          }@else {
+            {{ data.tempoJs }}
+          }
+        </td>
+        <td>
+          @if(data.tempoWasm == null){
+            <p-progress-spinner ariaLabel="loading" [style.width.px]="32" [style.height.px]="32"/>
+          }@else {
+            {{ data.valoreJs }}
+          }
+        </td>
+        <td>
+          @if(data.tempoWasm == null){
+            <p-progress-spinner ariaLabel="loading" [style.width.px]="32" [style.height.px]="32"/>
+          }@else {
+            <p-badge [value]="data.performance" severity="success" />
+          }
+        </td>
+      </tr>
+    </ng-template>
+</p-table>
+</p-panel>
