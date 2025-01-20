@@ -8,6 +8,7 @@ import { GlobalStore } from './store/global.store';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { Toast } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { EoqService } from './services/eoq.service';
 
 @Component({
   selector: 'app-root',
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit {
   protected router = inject(Router);
   protected messageService = inject(MessageService);
   public store = inject(GlobalStore);
+  protected tt = inject(EoqService);
 
   codDip = model<string>('');
   nome = model<string>('');
@@ -40,6 +42,11 @@ export class AppComponent implements OnInit {
     if (this.codDip().length) {
       this.store.login(+this.codDip());
     }
+
+    this.tt.calculateEOQ(1,2,3).then(res=>{
+      console.log("WebAssembly EOQ", res);
+
+    })
   }
 
   public newUser = computed(
@@ -48,14 +55,16 @@ export class AppComponent implements OnInit {
 
   public validateNumberCodDip = computed<boolean>(() => isNaN(+this.codDip()));
 
-  public disableConfirmCodDip = computed<boolean>(() => this.validateNumberCodDip() || this.codDip().length == 0);
+  public disableConfirmCodDip = computed<boolean>(
+    () => this.validateNumberCodDip() || this.codDip().length == 0
+  );
 
   protected hideModalAndNavigate = effect(
     () => {
       if (this.store.loggato()) {
         this.visibile.set(false);
         this.router.navigate(['dashboard']);
-      }else{
+      } else {
         this.visibile.set(true);
       }
     },
