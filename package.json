@@ -6,7 +6,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "asbuild:debug": "asc src/assets/assembly/index.ts --target debug",
+    "asbuild:release": "asc src/assets/assembly/index.ts --target release",
+    "asbuild": "npm run asbuild:debug && npm run asbuild:release"
   },
   "private": true,
   "dependencies": {
@@ -39,11 +42,19 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.4.2"
+    "typescript": "~5.4.2",
+    "assemblyscript": "^0.27.31"
   },
   "overrides": {
     "@supabase/supabase-js": {
       "@supabase/gotrue-js": "2.61.0"
+    }
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./build/release.js",
+      "types": "./build/release.d.ts"
     }
   }
 }
