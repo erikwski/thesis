@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, inject, model, OnInit, signal } from '@angular/core';
 import { WasmLoaderService } from '../..//services/webAssembly.service';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -14,12 +14,12 @@ type Response = {
 }
 
 type DataTable = {
-  tempoWasm: string | null;
+  tempoWasm: string;
   valoreWasm: number;
-  tempoJs: string | null;
+  tempoJs: string;
   valoreJs: number;
   campioni: number;
-  performance: string | null;
+  performance: string;
 };
 
 @Component({
@@ -34,7 +34,7 @@ type DataTable = {
     FormsModule,
     TableModule,
     BadgeModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
   ],
   templateUrl: './benchmark.component.html',
 })
@@ -42,33 +42,25 @@ export class BenchmarkComponent {
   public service = inject(WasmLoaderService);
   public cdr = inject(ChangeDetectorRef);
   public risultati: DataTable[] = [];
+  /** se ha stringa, calcola wasm ma non ancora il js */
   public numeroDiEsempi = signal(999);
 
   async runBenchmark() {
+    const wasm = await this.runWasm();
+    const js = this.runJs();
     this.risultati.push({
       campioni: this.numeroDiEsempi(),
-      tempoWasm: null,
-      valoreWasm: 0,
-      tempoJs: null,
-      valoreJs: 0,
-      performance: null,
+      tempoWasm: wasm.tempo.toFixed(2) + 'ms',
+      valoreWasm: wasm.valoreCalcolato,
+      tempoJs: js.tempo.toFixed(2) + 'ms',
+      valoreJs: js.valoreCalcolato,
+      performance: ((js.tempo / wasm.tempo) * 100).toFixed(2) + '%',
     });
     this.cdr.detectChanges();
-    const wasm = await this.runWasm();
-    this.risultati[this.risultati.length - 1].tempoWasm =
-      wasm.tempo.toFixed(2) + 'ms';
-      this.risultati[this.risultati.length - 1].valoreWasm = wasm.valoreCalcolato;
-    this.cdr.detectChanges();
-    const js = this.runJs();
-    this.risultati[this.risultati.length - 1].tempoJs =
-      js.tempo.toFixed(2) + 'ms';
-    this.risultati[this.risultati.length - 1].valoreJs = js.valoreCalcolato;
-    this.risultati[this.risultati.length - 1].performance = ((js.tempo / wasm.tempo) * 100).toFixed(2) + '%';
-    this.cdr.detectChanges()
   }
 
-  async runWasm() : Promise<Response> {
-    await this.service.loadWasm()
+  async runWasm(): Promise<Response> {
+    await this.service.loadWasm();
     const start = performance.now();
 
     const accumulatedResult = this.service.callFunction(
@@ -83,7 +75,7 @@ export class BenchmarkComponent {
     };
   }
 
-  runJs() : Response {
+  runJs(): Response {
     const start = performance.now();
     let accumulatedResult = 0;
     for (let i = 0; i < this.numeroDiEsempi(); i++) {

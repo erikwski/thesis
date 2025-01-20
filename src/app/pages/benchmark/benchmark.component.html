@@ -20,7 +20,10 @@
       (click)="runBenchmark()">
     </button>
   </div>
-  
+
+  <div class="w-full text-center text-gray-500 mb-3">
+    Sconsiglio di superare i 99999999 dato che superano i 30 secondi di esecuzioni in media
+  </div>
 
   <p-table [value]="risultati" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template #header>
@@ -35,44 +38,13 @@
     </ng-template>
     <ng-template #body let-data>
       <tr>
+        <td>{{ data.campioni }}</td>
+        <td>{{ data.tempoWasm }}</td>
+        <td>{{ data.valoreWasm }}</td>
+        <td>{{ data.tempoJs }}</td>
+        <td>{{ data.valoreJs }}</td>
         <td>
-          {{ data.campioni }}
-        </td>
-        <td>
-          @if(data.tempoWasm == null){
-            <p-progress-spinner ariaLabel="loading" [style.width.px]="32" [style.height.px]="32"/>
-          }@else {
-            {{ data.tempoWasm }}
-          }
-        </td>
-        <td>
-          @if(data.tempoWasm == null){
-            <p-progress-spinner ariaLabel="loading" [style.width.px]="32" [style.height.px]="32"/>
-          }@else {
-            {{ data.valoreWasm }}
-          }
-        </td>
-        <td>
-          @if(data.tempoWasm == null){
-            <p-progress-spinner ariaLabel="loading" [style.width.px]="32" [style.height.px]="32"/>
-          }@else {
-            {{ data.tempoJs }}
-          }
-        </td>
-        <td>
-          @if(data.tempoWasm == null){
-            <p-progress-spinner ariaLabel="loading" [style.width.px]="32" [style.height.px]="32"/>
-          }@else {
-            {{ data.valoreJs }}
-          }
-        </td>
-        <td>
-          @if(data.tempoWasm == null){
-            <p-progress-spinner ariaLabel="loading" [style.width.px]="32" [style.height.px]="32"/>
-          }@else {
-            <p-badge [value]="data.performance" severity="success" />
-          }
-        </td>
+          <p-badge [value]="data.performance" severity="success" /></td>
       </tr>
     </ng-template>
 </p-table>
