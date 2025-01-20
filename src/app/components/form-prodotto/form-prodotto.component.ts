@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, input, output } from '@angular/core';
-import { DEFAULT_PRODOTTO, Prodotto } from '../models/prodotto';
+import { ChangeDetectionStrategy, Component, computed, effect, input, output } from '@angular/core';
+import { DEFAULT_PRODOTTO, Prodotto } from '../../models/prodotto';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';

@@ -6,7 +6,7 @@ import {
   signal,
 } from '@angular/core';
 import { DEFAULT_PRODOTTO, Prodotto } from '../../models/prodotto';
-import { FormProdottoComponent } from '../../components/form-prodotto.component';
+import { FormProdottoComponent } from '../../components/form-prodotto/form-prodotto.component';
 import { ProdottiStore } from '../../store/prodotti..store';
 import { GlobalStore } from '../../store/global.store';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -20,7 +20,6 @@ import { Router } from '@angular/router';
   imports: [FormProdottoComponent, ConfirmDialogModule],
   providers: [ConfirmationService],
   templateUrl: './nuovo-prodotto.component.html',
-  styleUrl: './nuovo-prodotto.component.scss',
 })
 export class NuovoProdottoComponent {
   public prodottoStore = inject(ProdottiStore);

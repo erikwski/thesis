@@ -25,14 +25,18 @@
 </ng-template>
   <ng-template #header>
     <tr>
+      <th [style.width.px]="40"></th>
       @for(colonna of colonneTabella; track $index){
       <th >{{ colonna.titolo }}</th>
       }
       <th [style.width.px]="100" class="text-center">Azioni</th>
     </tr>
   </ng-template>
-  <ng-template #body let-prodotto let-columns="columns">
+  <ng-template #body let-prodotto let-columns="columns" let-expanded="expanded">
     <tr>
+      <td>
+        <p-button type="button" pRipple [pRowToggler]="prodotto" [text]="true" [rounded]="true" [plain]="true" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+      </td>
       @for(col of colonneTabella; track col.titolo){
         <td>
             {{ prodotto[col.campo] }}
@@ -63,7 +67,17 @@
         </div>
       </td>
     </tr>
-</ng-template>
+  </ng-template>
+  <ng-template #expandedrow let-prodotto>
+    <tr>
+      <td [attr.colspan]="colonneTabella.length + 2">
+        <prodotto-eoq
+          [prodotto]="prodotto"
+          (calculatedValueUpdate)="salvaModifiche($event)"
+        ></prodotto-eoq>
+      </td>
+    </tr>
+  </ng-template>
   <ng-template #body let-prodotto>
     <tr>
       @for(colonna of colonneTabella; track $index){
@@ -77,11 +91,11 @@
 
   <ng-template #emptymessage>
     <tr>
-        <td [attr.colspan]="colonneTabella.length + 1">
+        <td [attr.colspan]="colonneTabella.length + 2">
           <p-message severity="warn" class="text-center">{{emptyMessage()}}</p-message>
         </td>
     </tr>
-</ng-template>
+  </ng-template>
 </p-table>
 <p-paginator 
   (onPageChange)="pageChange($event)" 

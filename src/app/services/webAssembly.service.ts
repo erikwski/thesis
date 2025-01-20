@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WasmLoaderService {
-  private wasmInstance: WebAssembly.Instance | null = null;
+  protected wasmInstance = signal<WebAssembly.Instance | null>(null);
+  public loadedInstance = computed(() => this.wasmInstance() != null);
 
   constructor() {}
 
@@ -12,7 +13,7 @@ export class WasmLoaderService {
    * Carica il modulo webAssembly
    */
   async loadWasm(): Promise<void> {
-    if (this.wasmInstance) {
+    if (this.wasmInstance()) {
       console.warn('WASM module already loaded.');
       return;
     }
@@ -29,7 +30,7 @@ export class WasmLoaderService {
       };
 
       const { instance } = await WebAssembly.instantiate(buffer, imports);
-      this.wasmInstance = instance;
+      this.wasmInstance.set(instance);
 
       console.log('WASM module loaded:', instance.exports);
     } catch (error) {
@@ -43,17 +44,14 @@ export class WasmLoaderService {
    * @param functionName  nome funzione
    * @param args parametri
    */
-  callFunction<T = any>(functionName: string, ...args: any[]): T | null {
-    debugger;
-    if (!this.wasmInstance) {
-      console.error('WASM module not loaded.');
-      return null;
+  callFunction<T = any>(functionName: string, ...args: any[]): T {
+    if (!this.wasmInstance()) {
+      throw Error('WASM module not loaded.');
     }
 
-    const fn = this.wasmInstance.exports[functionName] as (...args: any[]) => T;
+    const fn = this.wasmInstance()!.exports[functionName] as (...args: any[]) => T;
     if (typeof fn !== 'function') {
-      console.error(`Function ${functionName} not found in WASM exports.`);
-      return null;
+      throw Error(`Function ${functionName} not found in WASM exports.`);
     }
 
     return fn(...args);

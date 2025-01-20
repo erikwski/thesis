@@ -14,7 +14,8 @@ import { MessageModule } from 'primeng/message';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ConfirmationService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
-import { FormProdottoComponent } from '../../components/form-prodotto.component';
+import { FormProdottoComponent } from '../../components/form-prodotto/form-prodotto.component';
+import { EoqComponent } from '../../components/eoq/eoq.component';
 
 
 type ColonneTabella = {
@@ -41,10 +42,10 @@ type ColonneTabella = {
     ConfirmPopupModule,
     DialogModule,
     FormProdottoComponent,
+    EoqComponent
   ],
   providers: [ConfirmationService],
   templateUrl: './prodotti.component.html',
-  styleUrl: './prodotti.component.scss',
 })
 export class ProdottiComponent implements AfterViewInit {
   public store = inject(ProdottiStore);

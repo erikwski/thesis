@@ -1,11 +1,5 @@
 {
   "targets": {
-    "debug": {
-      "outFile": "src/assets/assembly/build/debug.wasm",
-      "textFile": "src/assets/assembly/build/debug.wat",
-      "sourceMap": true,
-      "debug": true
-    },
     "release": {
       "outFile": "src/assets/assembly/build/release.wasm",
       "textFile": "src/assets/assembly/build/release.wat",

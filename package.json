@@ -7,9 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "asbuild:debug": "asc src/assets/assembly/index.ts --target debug",
-    "asbuild:release": "asc src/assets/assembly/index.ts --target release",
-    "asbuild": "npm run asbuild:debug && npm run asbuild:release"
+    "asbuild": "asc src/assets/assembly/index.ts --target release"
   },
   "private": true,
   "dependencies": {

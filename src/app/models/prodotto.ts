@@ -7,9 +7,6 @@ export interface Prodotto {
   holdingCostPerUnit: number; // Costo di mantenimento per unità per anno (H)
   unitCost: number; // Costo per unità del prodotto
   leadTime: number; // Tempo di consegna (in giorni)
-  reorderPoint?: number; // Punto di riordino (calcolato o definito)
-  eoq?: number; // Lotto Economico di Ordinazione (calcolato)
-  totalCost?: number; // Costo totale annuale associato (calcolato)
   utente?: number; // Utente alla quale é collegato
 }
 
@@ -24,9 +21,6 @@ export class ProdottoDto {
       holdingCostPerUnit: data.holding_cost_per_unit.toFixed(2),
       unitCost: data.unit_cost.toFixed(2),
       leadTime: data.lead_time,
-      reorderPoint: data.reorder_point ?? undefined,
-      eoq: data.eoq ?? undefined,
-      totalCost: data.total_cost ?? undefined,
       utente: data.utente,
     };
   }
@@ -41,9 +35,6 @@ export class ProdottoDto {
       holding_cost_per_unit: Number(data.holdingCostPerUnit) ?? 0,
       unit_cost: Number(data.unitCost) ?? 0,
       lead_time: Math.abs(Number(data.leadTime)) ?? 0,
-      // reorder_point: Number(data.reorderPoint) ?? undefined,
-      // eoq: Number(data.eoq) ?? undefined,
-      // total_cost: Number(data.totalCost) ?? undefined,
       utente: data.utente,
     };
   }

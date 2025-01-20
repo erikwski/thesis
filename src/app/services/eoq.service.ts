@@ -8,8 +8,17 @@ import { WasmLoaderService } from './webAssembly.service.js';
 export class EoqService {
   protected loader = inject(WasmLoaderService);
 
-  async calculateEOQ(D: number, S: number, H: number): Promise<number> {
-    await this.loader.loadWasm();
+  public async loadedWasm(){
+    if (!this.loader.loadedInstance) {
+      this.loader.loadWasm();
+    }
+  } 
+
+  public calculateEOQ(D: number, S: number, H: number): number {
     return this.loader.callFunction<number>('calculateEOQ', D, S, H) ?? 0;
+  }
+
+  public get isLoaded(){
+    return this.loader.loadedInstance
   }
 }
