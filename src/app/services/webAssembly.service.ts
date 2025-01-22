@@ -14,7 +14,6 @@ export class WasmLoaderService {
    */
   async loadWasm(): Promise<void> {
     if (this.wasmInstance()) {
-      console.warn('WASM module already loaded.');
       return;
     }
 

@@ -1,15 +1,18 @@
 <div class="flex gap-4 justify-center items-end">
-  <div class="flex flex-col gap-2">
-    <label>Punto di riordino</label>
-    <input pInputText [value]="'4'" disabled/>
-  </div>
-  <div class="flex flex-col gap-2">
-    <label>EOQ</label>
-    <input pInputText [value]="'4'" disabled/>
-  </div>
-  <div class="flex flex-col gap-2">
-    <label>Costo totale</label>
-    <input pInputText [value]="'4'" disabled/>
-  </div>
-  <p-button label="Calcola" severity="warn"/>
+  @if(calcolateReady()){
+    <div class="flex flex-col gap-2">
+      <label>Punto di riordino</label>
+      <input pInputText type="number" [value]="puntoRiordino()" disabled/>
+    </div>
+    <div class="flex flex-col gap-2">
+      <label>EOQ</label>
+      <input pInputText type="number" [value]="eoq()" disabled/>
+    </div>
+    <div class="flex flex-col gap-2">
+      <label>Costo totale</label>
+      <input pInputText type="number" [value]="costoTotale()" disabled/>
+    </div>
+  }@else {
+    <p-progress-spinner ariaLabel="loading" />
+  }
 </div>

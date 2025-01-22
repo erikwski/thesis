@@ -1,14 +1,14 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit, input, output, computed } from '@angular/core';
 import { EoqService } from '../../services/eoq.service';
 import { Prodotto } from '../../models/prodotto';
-import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { ProgressSpinner } from 'primeng/progressspinner';
 
 @Component({
   selector: 'prodotto-eoq',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [InputTextModule, ButtonModule],
+  imports: [InputTextModule, ProgressSpinner],
   templateUrl: './eoq.component.html',
 })
 export class EoqComponent implements OnInit {
@@ -21,5 +21,39 @@ export class EoqComponent implements OnInit {
     this.eoqService.loadedWasm();
   }
 
-  calcolateReady = computed(() => this.eoqService.isLoaded());
+  public readonly calcolateReady = computed(() =>
+    this.eoqService.calcolateReady()
+  );
+
+  public readonly puntoRiordino = computed(() => {
+    const { leadTime, annualDemand } = this.prodotto();
+    return this.calcolateReady()
+      ? this.eoqService.calculateReorderPoint(leadTime, annualDemand)
+      : null;
+  });
+
+  public readonly eoq = computed(() => {
+    const { annualDemand, setupCost, holdingCostPerUnit } = this.prodotto();
+    return this.calcolateReady()
+      ? this.eoqService.calculateEOQ(
+          annualDemand,
+          setupCost,
+          holdingCostPerUnit
+        )
+      : null;
+  });
+
+  public readonly costoTotale = computed(() => {
+    const { annualDemand, setupCost, holdingCostPerUnit, unitCost } =
+      this.prodotto();
+    return this.calcolateReady() && this.eoq()
+      ? this.eoqService.calculateTotalCost(
+          annualDemand,
+          setupCost,
+          holdingCostPerUnit,
+          unitCost,
+          this.eoq()!
+        )
+      : null;
+  });
 }

@@ -1,9 +1,10 @@
-import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
+import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from '@ngrx/signals';
 import { UserData } from '../models/userData';
-import { computed, inject } from '@angular/core';
+import { computed, effect, inject } from '@angular/core';
 import { setFulfilled, setPending, withRequestStatus } from './request-status.feature';
 import { withLogger } from './logger.feature';
 import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 const initialState: UserData = {
   nome: '',
@@ -15,7 +16,7 @@ export const GlobalStore = signalStore(
   withLogger('User'),
   withRequestStatus(),
   withMethods((store, service = inject(UserService)) => ({
-    async login(codDip: number, showSuccess : boolean = false): Promise<void> {
+    async login(codDip: number, showSuccess: boolean = false): Promise<void> {
       patchState(store, setPending());
       try {
         const exist = await service.esisteUtente(codDip);
@@ -81,5 +82,14 @@ export const GlobalStore = signalStore(
     loggato: computed(() => {
       return store.codDipendente() > 0 && store.nome().length > 0;
     }),
-  }))
+  })),
+  withHooks((store) => {
+    const router = inject(Router);
+
+    return {
+      onInit() {
+        effect(()=> store.loggato() && router.navigate(['dashboard']))
+      },
+    };
+  }),
 );

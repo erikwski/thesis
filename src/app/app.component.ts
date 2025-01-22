@@ -3,7 +3,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { GlobalStore } from './store/global.store';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { Toast } from 'primeng/toast';
@@ -27,13 +27,11 @@ import { MessageService } from 'primeng/api';
   providers: [MessageService],
 })
 export class AppComponent implements OnInit {
-  protected router = inject(Router);
   protected messageService = inject(MessageService);
   public store = inject(GlobalStore);
 
   codDip = model<string>('');
   nome = model<string>('');
-  visibile = signal(true);
 
   ngOnInit(): void {
     this.codDip.set(localStorage.getItem('codDip') ?? '');
@@ -46,22 +44,12 @@ export class AppComponent implements OnInit {
     () => this.store.codDipendente() > 0 && this.store.nome().length === 0
   );
 
+  public showLogin = computed(() => !this.store.loggato());
+
   public validateNumberCodDip = computed<boolean>(() => isNaN(+this.codDip()));
 
   public disableConfirmCodDip = computed<boolean>(
     () => this.validateNumberCodDip() || this.codDip().length == 0
-  );
-
-  protected hideModalAndNavigate = effect(
-    () => {
-      if (this.store.loggato()) {
-        this.visibile.set(false);
-        this.router.navigate(['dashboard']);
-      } else {
-        this.visibile.set(true);
-      }
-    },
-    { allowSignalWrites: true }
   );
 
   protected showMessages = effect(() => {

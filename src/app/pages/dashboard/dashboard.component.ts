@@ -56,6 +56,11 @@ export class DashboardComponent {
           route: '/dashboard/nuovoProdotto',
         },
         {
+          label: 'Genera storico',
+          icon: 'pi pi-history',
+          route: '/dashboard/history',
+        },
+        {
           label: 'Benchmark',
           icon: 'pi pi-calculator',
           route: '/dashboard/benchMark',

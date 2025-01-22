@@ -2,19 +2,19 @@
   <div class="flex mb-3 justify-center items-end gap-4">
     <!-- Input for Number of Samples -->
     <div class="flex flex-col gap-2">
-      <label for="samples">Number of Samples</label>
+      <label for="samples">Numeri di campioni da calcolare</label>
       <input 
         id="samples" 
         type="text" 
         pInputText 
         [(ngModel)]="numeroDiEsempi" 
-        placeholder="Enter number of iterations" 
+        placeholder="Numero di prodotti" 
       />
     </div>
 
     <button 
       pButton 
-      label="Run BenchMark" 
+      label="Esegui test" 
       icon="pi pi-cog" 
       class="p-button-raised p-button-success" 
       (click)="runBenchmark()">

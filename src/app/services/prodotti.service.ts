@@ -37,7 +37,7 @@ export class ProdottoService {
     const { data, error, count } = await query;
 
     if (error) {
-      console.error('Error fetching paginated products:', error.message);
+      console.error('Errore durante ottenimento dei prodotti:', error.message);
       throw error;
     }
 
@@ -51,7 +51,7 @@ export class ProdottoService {
       .select()
       .single();
     if (error) {
-      console.error('Error adding product:', error.message);
+      console.error('Errore aggiungendo prodotto:', error.message);
       throw error;
     }
     return data;
@@ -70,7 +70,7 @@ export class ProdottoService {
       .single();
 
     if (error) {
-      console.error('Error updating product:', error.message);
+      console.error('Errore aggiornando prodotto:', error.message);
       throw error;
     }
     return data;
@@ -83,7 +83,7 @@ export class ProdottoService {
       .delete()
       .eq('id', id);
     if (error) {
-      console.error('Error deleting product:', error.message);
+      console.error('Errore eliminando prodotto:', error.message);
       throw error;
     }
   }

@@ -9,6 +9,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AuthGuard } from './auth.guard';
 import { GlobalStore } from './store/global.store';
 import { ProdottiStore } from './store/prodotti..store';
+import { StoricoStore } from './store/storico.store';
 
 const Noir = definePreset(Aura, {
   semantic: {
@@ -64,6 +65,7 @@ export const appConfig: ApplicationConfig = {
     AuthGuard,
     GlobalStore,
     ProdottiStore,
+    StoricoStore,
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),

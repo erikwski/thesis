@@ -16,6 +16,7 @@ import { ConfirmationService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { FormProdottoComponent } from '../../components/form-prodotto/form-prodotto.component';
 import { EoqComponent } from '../../components/eoq/eoq.component';
+import { StoricoTableComponent } from '../../components/storico-table/storico-table.component';
 
 
 type ColonneTabella = {
@@ -42,7 +43,8 @@ type ColonneTabella = {
     ConfirmPopupModule,
     DialogModule,
     FormProdottoComponent,
-    EoqComponent
+    EoqComponent,
+    StoricoTableComponent
   ],
   providers: [ConfirmationService],
   templateUrl: './prodotti.component.html',
@@ -110,7 +112,7 @@ export class ProdottiComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.filterChanged.set(true);
-    if (this.store.prodotti().length > 0 || this.store.page() > 0 ) {
+    if (this.store.prodotti().length > 0 || this.store.page() > 0) {
       // store giá presente vecchi record, aggiorno paginator
       this.paginatorEl()!.changePage(this.store.page());
       this.cdr.detectChanges();

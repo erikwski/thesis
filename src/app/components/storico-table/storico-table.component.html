@@ -1,0 +1,29 @@
+<div class="container max-w-3xl mx-auto text-center">
+  <h2 class="mb-2 mt-6 text-xl">Storico prodotto</h2>
+  @if(loading()){
+    <p-progress-spinner ariaLabel="loading" />
+  }@else {
+    @if(storicoProdotto().length){
+      <p-table [value]="storicoProdotto()">
+          <ng-template #header>
+              <tr>
+                  <th pSortableColumn="year">Anno <p-sortIcon field="year" /></th>
+                  <th>Punto di riordino</th>
+                  <th>EOQ</th>
+                  <th>Costo totale</th>
+              </tr>
+          </ng-template>
+          <ng-template #body let-data>
+              <tr>
+                  <td>{{ data.year }}</td>
+                  <td>{{ data.reorderPoint }}</td>
+                  <td>{{ data.eoq }}</td>
+                  <td>{{ data.totalCost }}</td>
+              </tr>
+          </ng-template>
+      </p-table>
+    }@else {
+      <p-message severity="warn" class="text-center">Non é presente uno storico del prodotto</p-message>
+    }
+  }
+</div>
