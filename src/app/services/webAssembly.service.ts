@@ -44,14 +44,14 @@ export class WasmLoaderService {
    * @param args parametri
    */
   callFunction<T = any>(functionName: string, ...args: any[]): T {
-    // if (!this.wasmInstance()) {
-    //   throw Error('WASM module not loaded.');
-    // }
+    if (!this.wasmInstance()) {
+      throw Error('WASM module not loaded.');
+    }
 
-    // const fn = this.wasmInstance()!.exports[functionName] as (...args: any[]) => T;
-    // if (typeof fn !== 'function') {
-    //   throw Error(`Function ${functionName} not found in WASM exports.`);
-    // }
+    const fn = this.wasmInstance()!.exports[functionName] as (...args: any[]) => T;
+    if (typeof fn !== 'function') {
+      throw Error(`Function ${functionName} not found in WASM exports.`);
+    }
 
     return (this.wasmInstance()!.exports[functionName] as CallableFunction)(...args);
   }

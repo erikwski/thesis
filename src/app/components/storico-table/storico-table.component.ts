@@ -27,7 +27,6 @@ export class StoricoTableComponent implements OnInit {
 
   protected async getStorico(){
     const res = await this.store.getStoricoProdotto(this.prodotto().id);
-    console.log(res)
     
     this.storicoProdotto.set(res);
   }

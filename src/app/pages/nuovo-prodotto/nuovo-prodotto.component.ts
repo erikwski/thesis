@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { DEFAULT_PRODOTTO, Prodotto } from '../../models/prodotto';
 import { FormProdottoComponent } from '../../components/form-prodotto/form-prodotto.component';
-import { ProdottiStore } from '../../store/prodotti..store';
+import { ProdottiStore } from '../../store/prodotti.store';
 import { GlobalStore } from '../../store/global.store';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';

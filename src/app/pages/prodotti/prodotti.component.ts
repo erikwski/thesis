@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, effect, inject, model, OnInit, signal, viewChild } from '@angular/core';
-import { ProdottiStore } from '../../store/prodotti..store';
+import { ProdottiStore } from '../../store/prodotti.store';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { SelectModule } from 'primeng/select';

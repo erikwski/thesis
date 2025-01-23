@@ -10,7 +10,7 @@ export interface Prodotto {
   utente?: number; // Utente alla quale é collegato
 }
 
-export class ProdottoDto {
+export class ProdottoApiCasting {
   static fromAPIResponse(data: any): Prodotto {
     return {
       id: String(data.id),

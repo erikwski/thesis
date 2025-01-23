@@ -8,7 +8,7 @@ import Aura from '@primeng/themes/aura';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthGuard } from './auth.guard';
 import { GlobalStore } from './store/global.store';
-import { ProdottiStore } from './store/prodotti..store';
+import { ProdottiStore } from './store/prodotti.store';
 import { StoricoStore } from './store/storico.store';
 
 const Noir = definePreset(Aura, {

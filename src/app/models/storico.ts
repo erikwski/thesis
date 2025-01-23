@@ -1,6 +1,6 @@
 export interface Storico {
   prodotto: number;
-  anno: number;
+  year: number;
   eoq: number;
   reorderPoint: number;
   totalCost: number;

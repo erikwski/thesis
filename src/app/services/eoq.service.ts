@@ -9,9 +9,9 @@ export class EoqService {
 
   public readonly calcolateReady = computed(() => this.loader.loadedInstance());
 
-  public async loadedWasm() {
+  public async loadWasm() {
     if (!this.loader.loadedInstance()) {
-      this.loader.loadWasm();
+      await this.loader.loadWasm();
     }
   }
 

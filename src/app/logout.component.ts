@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GlobalStore } from './store/global.store';
-import { ProdottiStore } from './store/prodotti..store';
+import { ProdottiStore } from './store/prodotti.store';
 
 @Component({
   selector: 'app-logout',

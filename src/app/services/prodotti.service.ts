@@ -23,7 +23,7 @@ export class ProdottoService {
       .select('*', { count: 'exact' })
       .eq('utente', this.store.codDipendente())
       .order('id', {
-        ascending: false
+        ascending: false,
       })
       .range(start, start + pageSize);
 
@@ -57,7 +57,6 @@ export class ProdottoService {
     return data;
   }
 
-  // Update an existing product
   async updateProdotto(
     id: string,
     updates: Partial<Prodotto>
@@ -76,7 +75,6 @@ export class ProdottoService {
     return data;
   }
 
-  // Delete a product
   async deleteProdotto(id: string): Promise<void> {
     const { error } = await this.supabase
       .from('prodotti')

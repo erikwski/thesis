@@ -18,7 +18,7 @@ export class EoqComponent implements OnInit {
 
   ngOnInit(): void {
     // carico webAssembly in maniera lazy cosí da prepararlo per quando l'utente dovrá utilizzare i suoi calcoli
-    this.eoqService.loadedWasm();
+    this.eoqService.loadWasm();
   }
 
   public readonly calcolateReady = computed(() =>

@@ -23,3 +23,9 @@ max-width per migliorare la responsiveness del componente che su piccoli device 
 .p-message-content{
   justify-content: center;
 }
+
+.center-table{
+  th, td{
+    text-align: center !important;
+  }
+}

@@ -1,12 +1,9 @@
-import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from '@ngrx/signals';
-import { UserData } from '../models/userData';
-import { computed, inject } from '@angular/core';
+import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import { inject } from '@angular/core';
 import { setFulfilled, setPending, withRequestStatus } from './request-status.feature';
 import { withLogger } from './logger.feature';
-import { UserService } from '../services/user.service';
-import { Prodotto, ProdottoDto } from '../models/prodotto';
+import { Prodotto, ProdottoApiCasting } from '../models/prodotto';
 import { ProdottoService } from '../services/prodotti.service';
-import { withShowMessages } from './show-message.feature';
 import { GlobalStore } from './global.store';
 
 type ProdottoState = {
@@ -48,7 +45,7 @@ export const ProdottiStore = signalStore(
             (state) => ({
               ...state,
               prodotti: data.data.map((prodotto) =>
-                ProdottoDto.fromAPIResponse(prodotto)
+                ProdottoApiCasting.fromAPIResponse(prodotto)
               ),
               total: data.total,
               page,
@@ -94,7 +91,7 @@ export const ProdottiStore = signalStore(
         try {
           await service.updateProdotto(
             prodotto.id,
-            ProdottoDto.toAPIResponse(prodotto)
+            ProdottoApiCasting.toAPIResponse(prodotto)
           );
           //se andata a buon fine, elimino il prodotto dalla lista
           patchState(
@@ -108,7 +105,7 @@ export const ProdottiStore = signalStore(
             setFulfilled()
           );
           global.showMessage(`Prodotto aggiornato correttamente`, 'success');
-        } catch (error : any) {
+        } catch (error: any) {
           global.setError(
             `Impossibile aggiornare il prodotto, ${
               error?.message ?? "riprovare piú tardi o contattare l'assistenza"
@@ -117,9 +114,12 @@ export const ProdottiStore = signalStore(
           patchState(store, () => initialState, setFulfilled());
         }
       },
-      async creaProdotto(prodotto: Prodotto, codDip: number): Promise<Prodotto|null> {
+      async creaProdotto(
+        prodotto: Prodotto,
+        codDip: number
+      ): Promise<Prodotto | null> {
         patchState(store, setPending());
-        const newProd = ProdottoDto.toAPIResponse(prodotto);
+        const newProd = ProdottoApiCasting.toAPIResponse(prodotto);
         delete newProd.id;
         newProd.utente = codDip;
         try {
