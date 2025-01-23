@@ -5,21 +5,23 @@
   [tableStyle]="{ 'min-width': '50rem' }"
 >
   <ng-template #caption>
-    <div class="flex">
+    <div class="card flex flex-wrap justify-start gap-4">
       <h2 class="mb-3 text-3xl">Lista prodotti</h2>
-      <p-iconfield iconPosition="left" class="ml-auto">
-          <p-inputicon>
-              <i class="pi pi-search"></i>
-          </p-inputicon>
-          <input 
-            pInputText 
-            type="text" 
-            placeholder="Ricerca per nome/descrizione" 
-            [(ngModel)]="searchTerm"
-            [disabled]="disableNoData()"
-          />
-      </p-iconfield>
-      <p-button label="Cerca" class="ml-2" (click)="search()" [disabled]="disableNoData()"/>
+      <div class="flex flex-wrap justify-end gap-2">
+        <p-iconfield iconPosition="left" class="ml-auto">
+            <p-inputicon>
+                <i class="pi pi-search"></i>
+            </p-inputicon>
+            <input 
+              pInputText 
+              type="text" 
+              placeholder="Ricerca per nome/descrizione" 
+              [(ngModel)]="searchTerm"
+              [disabled]="disableNoData()"
+            />
+        </p-iconfield>
+        <p-button label="Cerca" class="ml-2" (click)="search()" [disabled]="disableNoData()"/>
+      </div>
 
     </div>
 </ng-template>

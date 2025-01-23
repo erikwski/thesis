@@ -10,7 +10,7 @@
     <div class="block lg:hidden">
       <button pButton (click)="visible.set(true)" icon="pi pi-bars"></button>
     </div>
-    <div class="container mx-auto pl-2">
+    <div class="container mx-auto pl-2 mt-2 lg:mt-0">
       <p-card>
         <router-outlet></router-outlet>
       </p-card>
@@ -33,7 +33,7 @@
           <span class="text-primary font-bold">{{ item.label }}</span>
       </ng-template>
       <ng-template #item let-item>
-        <a [routerLink]="item.route" routerLinkActive="active-link" class="p-menu-item-link" pRipple>
+        <a [routerLink]="item.route" routerLinkActive="active-link" class="p-menu-item-link" (click)="visible.set(false)" pRipple>
           <span [class]="item.icon"></span>
           <span class="ml-2">{{ item.label }}</span>
         </a>
