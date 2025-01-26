@@ -63,7 +63,7 @@ export class DashboardComponent {
         {
           label: 'Benchmark',
           icon: 'pi pi-calculator',
-          route: '/dashboard/benchMark',
+          route: '/dashboard/benchmark',
         },
       ],
     },

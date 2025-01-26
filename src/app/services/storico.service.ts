@@ -13,9 +13,27 @@ export class StoricoService {
 
   async anniConStoricoCalcolato(utente: number) {
     try {
+      const { data: prodotti, error: erroreProdotto } = await this.supabase
+        .from('prodotti')
+        .select('*')
+        .eq('utente', utente);
+
+      if (erroreProdotto) {
+        throw new Error(
+          `Errore ottenendo i prodotti: ${erroreProdotto.message}`
+        );
+      }
+
+      if (!prodotti || prodotti.length === 0) {
+        throw new Error('Non sono stati trovati prodotti');
+      }
+
+      const productIds = prodotti.map((product) => product.id);
+      
       const { data, error } = await this.supabase
         .from('storico')
-        .select('year', { count: 'exact' });
+        .select('year', { count: 'exact' })
+        .in('prodotto', productIds);;
 
       if (error) {
         throw new Error(

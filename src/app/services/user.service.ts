@@ -79,7 +79,6 @@ export class UserService {
       });
     }
 
-    // Insert products into the database
     const { data: insertedProducts, error: productError } =
       await this.supabase.from('prodotti').insert(products).select('id');
 
