@@ -1,34 +1,42 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { ProdottiComponent } from './pages/prodotti/prodotti.component';
-import { LogoutComponent } from './logout.component';
-import { NuovoProdottoComponent } from './pages/nuovo-prodotto/nuovo-prodotto.component';
-import { BenchmarkComponent } from './pages/benchmark/benchmark.component';
-import { StoricoComponent } from './pages/storico/storico.component';
-
 
 export const routes: Routes = [
   {
     path: 'dashboard',
-    component: DashboardComponent,
+    loadComponent: () =>
+      import('./pages/dashboard/dashboard.component').then(
+        (m) => m.DashboardComponent
+      ),
     canActivate: [AuthGuard],
     children: [
       {
         path: 'prodotti',
-        component: ProdottiComponent,
+        loadComponent: () =>
+          import('./pages/prodotti/prodotti.component').then(
+            (m) => m.ProdottiComponent
+          ),
       },
       {
         path: 'nuovoProdotto',
-        component: NuovoProdottoComponent,
+        loadComponent: () =>
+          import('./pages/nuovo-prodotto/nuovo-prodotto.component').then(
+            (m) => m.NuovoProdottoComponent
+          ),
       },
       {
         path: 'history',
-        component: StoricoComponent,
+        loadComponent: () =>
+          import('./pages/storico/storico.component').then(
+            (m) => m.StoricoComponent
+          ),
       },
       {
-        path: 'benchMark',
-        component: BenchmarkComponent,
+        path: 'benchmark',
+        loadComponent: () =>
+          import('./pages/benchmark/benchmark.component').then(
+            (m) => m.BenchmarkComponent
+          ),
       },
       { path: '', redirectTo: 'prodotti', pathMatch: 'full' },
       { path: '**', redirectTo: 'prodotti' },
@@ -36,6 +44,13 @@ export const routes: Routes = [
   },
   {
     path: 'logout',
-    component: LogoutComponent,
+    loadComponent: () =>
+      import('./logout.component').then((m) => m.LogoutComponent),
   },
+  {
+    path: '',
+    redirectTo: '',
+    pathMatch: 'full',
+  },
+  { path: '**', redirectTo: 'dashboard' },
 ];
