@@ -10,7 +10,7 @@
       </div>
       <div class="flex justify-center items-center gap-4 mb-4">
           <label for="username" class="font-semibold w-24">Nome</label>
-          <input pInputText id="codDip" class="flex-auto" autocomplete="off" [(ngModel)]="nome" />
+          <input pInputText id="codDip" class="flex-auto" autocomplete="off" [(ngModel)]="nome" (keyup.enter)="salvaNome()" />
       </div>
       <div class="flex justify-end gap-2">
           <p-button label="Conferma" [disabled]="nome().length == 0" (click)="salvaNome()" />
@@ -18,7 +18,7 @@
     }@else {
       <div class="flex justify-center items-center gap-4">
         <label for="username" class="font-semibold w-24">Codice</label>
-        <input pInputText type="text" id="codDip" class="flex-auto" autocomplete="off" [(ngModel)]="codDip" [class.ng-invalid]="validateNumberCodDip()"/>
+        <input pInputText type="text" id="codDip" class="flex-auto" autocomplete="off" [(ngModel)]="codDip" [class.ng-invalid]="validateNumberCodDip()" (keyup.enter)="login()"/>
       </div>
       @if(validateNumberCodDip()){
         <div class="flex justify-end gap-4">

@@ -52,6 +52,8 @@ export class AppComponent implements OnInit {
     () => this.validateNumberCodDip() || this.codDip().length == 0
   );
 
+  public disableSalvaNome = computed<boolean>(() => this.nome().length == 0);
+
   protected showMessages = effect(() => {
     const message = this.store.message();
     if (message.content) {
@@ -65,11 +67,15 @@ export class AppComponent implements OnInit {
   });
 
   login() {
+    if (this.disableConfirmCodDip()) return;
+
     localStorage.setItem('codDip', this.codDip());
     this.store.login(+this.codDip(), true);
   }
 
   salvaNome() {
+    if (this.disableSalvaNome()) return;
+    
     this.store.aggiornaNome(this.nome());
   }
 }
