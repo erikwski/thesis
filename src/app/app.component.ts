@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
 
   public showLogin = computed(() => !this.store.loggato());
 
-  public validateNumberCodDip = computed<boolean>(() => isNaN(+this.codDip()));
+public validateNumberCodDip = computed<boolean>(() => isNaN(+this.codDip()));
 
   public disableConfirmCodDip = computed<boolean>(
     () => this.validateNumberCodDip() || this.codDip().length == 0
