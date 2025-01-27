@@ -18,7 +18,7 @@
     }@else {
       <div class="flex justify-center items-center gap-4">
         <label for="username" class="font-semibold w-24">Codice</label>
-        <input pInputText type="text" id="codDip" class="flex-auto" autocomplete="off" [(ngModel)]="codDip" [class.ng-invalid]="validateNumberCodDip()" (keyup.enter)="login()"/>
+        <input pInputText type="text" id="codDip" class="flex-auto" autocomplete="off" [maxlength]="8" [(ngModel)]="codDip" [class.ng-invalid]="validateNumberCodDip()" (keyup.enter)="login()"/>
       </div>
       @if(validateNumberCodDip()){
         <div class="flex justify-end gap-4">
